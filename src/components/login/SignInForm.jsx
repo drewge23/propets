@@ -38,31 +38,34 @@ function SignInForm(props) {
         <form onSubmit={formik.handleSubmit} className={s.form} id={'signIn'}>
             <div className={s.formFields}>
                 <div>
+                    {formik.touched.email && formik.errors.email &&
+                        <span className={s.error}> {formik.errors.email} </span>}
                     <label htmlFor={'email'}> Email: </label>
                     <input
                         id={'email'}
                         name={'email'}
                         type="text"
+                        placeholder={'johndoe@gmail.com'}
                         onChange={formik.handleChange}
                         value={formik.values.email}
                     />
-                    {formik.touched.email && formik.errors.email && <span> {formik.errors.email} </span>}
                 </div>
 
                 <div>
+                    {formik.touched.password && formik.errors.password &&
+                        <span className={s.error}> {formik.errors.password} </span>}
                     <label htmlFor={'password'}> Password: </label>
                     <input
                         id={'password'}
                         name={'password'}
                         type="password"
+                        placeholder={'********'}
                         onChange={formik.handleChange}
                         value={formik.values.password}
                     />
-                    {formik.touched.password && formik.errors.password &&
-                        <span> {formik.errors.password} </span>}
                 </div>
 
-                <div>
+                <div className={s.forgot}>
                     Forgot your password?
                 </div>
             </div>

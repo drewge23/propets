@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 :root {
-  --green: #8DBFAC;
+  --green: rgb(141, 191, 172);
   --dark-green: #669885;
   --light-green: #84B6A3;
   --black: #393939;
@@ -12,9 +12,22 @@
   --dark-blue: #4560A6;
   --blue: #5067B3;
   --yellow: #FFE18B;
+
+  box-sizing: border-box;
+  padding: 0; margin: 0;
 }
 
 .App {
   font-family: 'Montserrat', sans-serif;
   text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+  border: 0 solid black;
 }

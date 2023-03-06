@@ -51,53 +51,57 @@ function SignUpForm(props) {
             <div className={s.formFields}>
 
                 <div>
+                    {formik.touched.name && formik.errors.name && <span className={s.error}> {formik.errors.name} </span>}
                     <label htmlFor={'name'}> Name: </label>
                     <input
                         id={'name'}
                         name={'name'}
                         type="text"
+                        placeholder={'John Doe'}
                         onChange={formik.handleChange}
                         value={formik.values.name}
                     />
-                    {formik.touched.name && formik.errors.name && <span> {formik.errors.name} </span>}
                 </div>
 
                 <div>
+                    {formik.touched.email && formik.errors.email && <span className={s.error}> {formik.errors.email} </span>}
                     <label htmlFor={'email'}> Email: </label>
                     <input
                         id={'email'}
                         name={'email'}
                         type="text"
+                        placeholder={'johndoe@gmail.com'}
                         onChange={formik.handleChange}
                         value={formik.values.email}
                     />
-                    {formik.touched.email && formik.errors.email && <span> {formik.errors.email} </span>}
                 </div>
 
                 <div>
+                    {formik.touched.password && formik.errors.password &&
+                        <span className={s.error}> {formik.errors.password} </span>}
                     <label htmlFor={'password'}> Password: </label>
                     <input
                         id={'password'}
                         name={'password'}
                         type="password"
+                        placeholder={'********'}
                         onChange={formik.handleChange}
                         value={formik.values.password}
                     />
-                    {formik.touched.password && formik.errors.password &&
-                        <span> {formik.errors.password} </span>}
                 </div>
 
                 <div>
+                    {formik.touched.repeat_password && formik.errors.repeat_password &&
+                        <span className={s.error}> {formik.errors.repeat_password} </span>}
                     <label htmlFor={'repeat_password'}> Password: </label>
                     <input
                         id={'repeat_password'}
                         name={'repeat_password'}
                         type="password"
+                        placeholder={'********'}
                         onChange={formik.handleChange}
                         value={formik.values.repeat_password}
                     />
-                    {formik.touched.repeat_password && formik.errors.repeat_password &&
-                        <span> {formik.errors.repeat_password} </span>}
                 </div>
             </div>
 

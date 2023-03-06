@@ -1,6 +1,6 @@
 import './App.css';
 import {Link, Route, Routes} from "react-router-dom";
-import Landing from "./components/Landing";
+import Landing from "./components/landing/Landing";
 import LoginPage from "./components/login/LoginPage";
 import Content from "./components/Content";
 import Home from "./components/content/Home";
