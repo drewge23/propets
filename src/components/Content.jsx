@@ -1,15 +1,15 @@
 import {Link, Outlet, Route, Routes} from "react-router-dom";
-import Header from "./main/Header";
-import SideNav from "./main/SideNav";
-import Home from "./main/Home";
-import LostFound from "./main/LostFound";
-import Hotels from "./main/Hotels";
-import Walking from "./main/Walking";
-import Fostering from "./main/Fostering";
-import VetHelp from "./main/VetHelp";
-import Favorites from "./main/Favorites";
-import Profile from "./main/Profile";
-import Ads from "./main/Ads";
+import Header from "./content/Header";
+import SideNav from "./content/SideNav";
+import Home from "./content/Home";
+import LostFound from "./content/LostFound";
+import Hotels from "./content/Hotels";
+import Walking from "./content/Walking";
+import Fostering from "./content/Fostering";
+import VetHelp from "./content/VetHelp";
+import Favorites from "./content/Favorites";
+import Profile from "./content/Profile";
+import Ads from "./content/Ads";
 import React from "react";
 
 function Content() {

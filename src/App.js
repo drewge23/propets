@@ -1,16 +1,16 @@
 import './App.css';
 import {Link, Route, Routes} from "react-router-dom";
 import Landing from "./components/Landing";
-import LoginPage from "./components/LoginPage";
+import LoginPage from "./components/Login/LoginPage";
 import Content from "./components/Content";
-import Home from "./components/main/Home";
-import LostFound from "./components/main/LostFound";
-import Hotels from "./components/main/Hotels";
-import Walking from "./components/main/Walking";
-import Fostering from "./components/main/Fostering";
-import VetHelp from "./components/main/VetHelp";
-import Favorites from "./components/main/Favorites";
-import Profile from "./components/main/Profile";
+import Home from "./components/content/Home";
+import LostFound from "./components/content/LostFound";
+import Hotels from "./components/content/Hotels";
+import Walking from "./components/content/Walking";
+import Fostering from "./components/content/Fostering";
+import VetHelp from "./components/content/VetHelp";
+import Favorites from "./components/content/Favorites";
+import Profile from "./components/content/Profile";
 import React from "react";
 
 function App() {
