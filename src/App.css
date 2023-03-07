@@ -1,37 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .App {
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
 }
 
 :root {
-  --green: rgb(141, 191, 172);
-  --dark-green: #669885;
-  --light-green: #84B6A3;
-  --black: #393939;
-  --dark-gray: #707070;
-  --gray: #BABABA;
-  --light-gray: #00000029;
-  --white: #FFFFFF;
-  --dark-blue: #4560A6;
-  --blue: #5067B3;
-  --yellow: #FFE18B;
+    --green: rgb(141, 191, 172);
+    --dark-green: #669885;
+    --light-green: #84B6A3;
+    --black: #393939;
+    --dark-gray: #707070;
+    --gray: #BABABA;
+    --light-gray: #00000029;
+    --white: #FFFFFF;
+    --dark-blue: #4560A6;
+    --blue: #5067B3;
+    --yellow: #FFE18B;
 
-  --container-width: 1200px;
+    --container-width: 1200px;
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0; margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 a {
-  text-decoration: none;
-  color: black;
+    text-decoration: none;
+    color: black;
 }
 
 button {
-  font-family: 'Montserrat', sans-serif;
-  border: 0 solid black;
+    font-family: 'Montserrat', sans-serif;
+    border: 0 solid black;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.filledBtn {
+    background-color: var(--green);
+    color: var(--white);
+    padding: 0.5rem 2rem;
+    border-radius: 17px;
+    font-size: 14px;
+}
+
+input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: var(--light-green) solid 2px;
+
+    margin-bottom: 1rem;
+    max-width: 140px;
+    font-size: 12px;
+    padding: 4px;
+}
+
+textarea {
+    resize: none;
+    padding: 4px;
 }

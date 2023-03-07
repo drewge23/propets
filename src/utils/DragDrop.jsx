@@ -3,12 +3,14 @@ import {FileUploader} from "react-drag-drop-files";
 
 const fileTypes = ["JPG", "PNG", "GIF", "JPEG"];
 
-function DragDrop({setFile}) {
+function DragDrop({setFile, children}) {
     const handleChange = (file) => {
         setFile(file);
     };
     return (
-        <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
+        <FileUploader multiple={true} handleChange={handleChange} name="file" types={fileTypes} classes={'dropZone'}>
+            {children}
+        </FileUploader>
     );
 }
 

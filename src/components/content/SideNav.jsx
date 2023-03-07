@@ -6,8 +6,8 @@ function SideNav(props) {
     return (
         <div>
             <nav>
-                <p><Link to="home">Home</Link></p>
-                <p><Link to="profile">Profile</Link></p>
+                <p><Link to="lost&found" state={{isLost: true}}>Lost</Link></p>
+                <p><Link to="lost&found" state={{isLost: false}}>Found</Link></p>
             </nav>
         </div>
     );
