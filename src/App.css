@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
+.App {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
 :root {
   --green: rgb(141, 191, 172);
   --dark-green: #669885;
@@ -13,13 +18,12 @@
   --blue: #5067B3;
   --yellow: #FFE18B;
 
-  box-sizing: border-box;
-  padding: 0; margin: 0;
+  --container-width: 1200px;
 }
 
-.App {
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
+* {
+  box-sizing: border-box;
+  padding: 0; margin: 0;
 }
 
 a {

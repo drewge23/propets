@@ -32,7 +32,7 @@ input {
 }
 
 .window {
-    width: 60%;
+    width: 650px;
     height: 390px;
     display: flex;
     flex-direction: column;

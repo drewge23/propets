@@ -2,7 +2,7 @@ import './App.css';
 import {Link, Route, Routes} from "react-router-dom";
 import Landing from "./components/landing/Landing";
 import LoginPage from "./components/login/LoginPage";
-import Content from "./components/Content";
+import Content from "./components/content/Content";
 import Home from "./components/content/Home";
 import LostFound from "./components/content/LostFound";
 import Hotels from "./components/content/Hotels";
