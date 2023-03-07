@@ -1,0 +1,123 @@
+.header {
+    width: 100%;
+    height: 70px;
+    background-color: var(--dark-green);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 151px;
+}
+
+.header img{
+    width: 140px;
+}
+
+.header button{
+    border: 1px solid var(--white);
+    border-radius: 50px;
+    padding: 8px 20px;
+    color: var(--white);
+    background-color: transparent;
+    font-size: 16px;
+}
+
+
+.first{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.left img{
+    max-width: 452px;
+    max-height: 596px;
+}
+
+.right .welcome{
+    padding: 69px 0 0 151px;
+    font-size: 56px;
+    text-align: left;
+}
+
+.right .welcome span{
+    color: var(--green);
+}
+
+.btnOne{
+    margin-top: 50px;
+    background-color: var(--yellow);
+    max-width: 554px;
+    height: 93px;
+
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+
+    position: relative;
+    z-index: 1;
+}
+
+.btnOne button{
+    font-size: 32px;
+    background-color: transparent;
+    padding: 27px 0 27px 0px;
+
+    position: absolute;
+    left: 151px;
+}
+
+.btnOne img{
+    width: 79px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+.btnTwo{
+    background-color: var(--light-green);
+    width: 470px;
+    height: 93px;
+
+    margin-top: -10px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+
+    position: relative;
+}
+
+.btnTwo button{
+    background-color: transparent;
+    color: var(--white);
+    font-size: 32px;
+    padding: 32px 0 22px 0px;
+
+    position: absolute;
+    left: 151px;
+}
+
+.text{
+    padding: 42px 0 30px 151px;
+    position: absolute;
+}
+
+.join{
+    color: var(--light-green);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+
+.second {
+    width: 100%;
+    height: 260px;
+    background-color: var(--dark-green);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.second p{
+    max-width: 750px;
+    color: var(--white);
+    font-size: 32px;
+}
