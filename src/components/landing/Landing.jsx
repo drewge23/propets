@@ -1,6 +1,8 @@
 import React from 'react';
 import {logo,logoBig,puppy,allPets} from "../../utils/constants";
 import {smallIcons} from "../../utils/constants";
+import {Link} from "react-router-dom";
+import LoginPage from "../Login/LoginPage";
 
 
 function Landing(props) {
@@ -9,19 +11,19 @@ function Landing(props) {
             <div className={'first'}>
                 <div className={'header'}>
                     <img src={logo} alt={'ProPets'} />
-                    <a href={''}>SignIn</a>
+                    <Link to={'login'}>SignIn</Link>
                 </div>
                 <div>
                     <section className={'right'}>
                         <h1>Welcome to your pawfessional community</h1>
                         <div>
                             <p>
-                                <button>I lost my pet</button>
+                                <Link to={'login'}><button>I lost my pet</button></Link>
                                 <img src={smallIcons[0]} alt={'icon loops'}/>
                             </p>
-                            <button>I found a pet</button>
+                            <Link to={'login'}><button>I found a pet</button></Link>
                         </div>
-                        <p>I’m okay, just want to <a href={'#'}>join</a> the pawsome community!</p>
+                        <p>I’m okay, just want to <Link to={'login'}>join</Link> the pawsome community!</p>
                     </section>
                     <section className={'left'}>
                         <img src={puppy} alt={'dog'}/>
