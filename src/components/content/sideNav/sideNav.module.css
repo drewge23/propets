@@ -1,10 +1,10 @@
 .sideNav {
-    margin-left: 80px;
+    /*padding-left: 80px;*/
 }
 
 .sideNav p {
     width: 100%;
-    margin: 20px 20px 20px 0;
+    padding-left: 80px;
     font-size: 16px;
     font-weight: 500;
     text-align: left;
@@ -12,13 +12,59 @@
     display: flex;
     flex-direction: column;
 }
+
 .sideNav a {
     color: var(--white);
     transition: 300ms;
 }
+
 .sideNav a:hover {
-    color: #dcdc04;
+    color: var(--yellow);
 }
+
 .sideNav a span {
     margin-right: 10px;
+}
+.sideNav div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.hasChildren {
+    background-color: black;
+    height: 200px;
+}
+.sideNav > div > div {
+    margin: 10px 0;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.activeContainer {
+    width: 250px;
+    height: 40px;
+    position: relative;
+    left: -40px;
+    background-color: var(--white);
+    border-radius: 0 17px 17px 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: background-color 500ms;
+}
+
+.active a {
+    position: relative;
+    left: 40px;
+    color: var(--green);
+    font-weight: 550;
+}
+
+.subActive a {
+    color: var(--yellow);
 }
