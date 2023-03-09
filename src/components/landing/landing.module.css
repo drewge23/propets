@@ -22,7 +22,6 @@
     font-size: 16px;
 }
 
-
 .first{
     display: grid;
     grid-template-columns: 50% 50%;
@@ -48,9 +47,7 @@
     background-color: var(--yellow);
     max-width: 554px;
     height: 93px;
-
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
+    border-radius: 0 50px 50px 0;
 
     position: relative;
     z-index: 1;
@@ -78,8 +75,7 @@
     height: 93px;
 
     margin-top: -10px;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
+    border-radius: 0 50px 50px 0;
 
     position: relative;
 }

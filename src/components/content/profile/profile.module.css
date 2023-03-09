@@ -1,0 +1,104 @@
+h3 {
+    font-size: 16px;
+    margin-bottom: 30px;
+    text-align: left;
+    color: var(--dark-green);
+}
+
+.window{
+    width: 100%;
+    box-shadow: 0 3px 6px #00000029
+}
+
+
+.header button {
+    width: 50%;
+    height: 34px;
+    color: white;
+    font-weight: bold;
+    background-color: var(--green);
+}
+
+.avatar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 20px;
+    padding: 10px;
+}
+
+.avatar img{
+    border: 1px solid var(--white);
+    width: 50px;
+    border-radius: 50% ;
+}
+
+.avatar h3{
+    margin-bottom: 0;
+}
+
+.avatar .name{
+    font-size: 16px;
+    margin-bottom: 30px;
+    text-align: left;
+    color: var(--dark-green);
+    margin-bottom: 0;
+}
+
+
+.avatar button{
+    background-color: var(--white);
+}
+
+label {
+    width: 50px;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 550;
+    text-align: right;
+}
+
+.data p{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: start;
+    gap: 20px;
+    padding-left: 10px;
+}
+
+.data input{
+    width: 250px;
+    max-width: 250px;
+}
+
+.btnCancel{
+    border: 1px solid var(--light-green);
+    border-radius: 50px;
+    padding: 8px 20px;
+    color: var(--light-green);
+    background-color: transparent;
+    font-size: 12px;
+}
+
+.btnSave{
+    border: 0px solid var(--light-green);
+    border-radius: 50px;
+    padding: 8px 20px;
+    color: var(--white);
+    background-color: var(--green);
+    font-size: 12px;
+}
+
+.btns{
+    margin-top: 30px;
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+
+.error{
+    font-size: 10px;
+    color: #a70000;
+}
