@@ -3,6 +3,7 @@ import s from './sideNav.module.css'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
+    faArrowRightFromBracket,
     faBullhorn,
     faDog,
     faHome,
@@ -13,6 +14,9 @@ import {
     faStar, faStethoscope
 } from '@fortawesome/free-solid-svg-icons'
 import SideNavLink from "./SideNavLink";
+import {Link} from "react-router-dom";
+
+import PLACEHOLDER from '../../../images/allPets.png'
 
 function SideNav(props) {
     const [active, setActive] = useState(0)
@@ -70,12 +74,27 @@ function SideNav(props) {
         }]
 
     return (
-        <nav className={s.sideNav}>
-            {linkArray.map((link, index) => (
-                <SideNavLink {...link} isActive={index === active}
-                             key={index} setActive={setActive} index={index}/>
-            ))}
-        </nav>
+        <>
+            <nav className={s.sideNav}>
+                {linkArray.map((link, index) => (
+                    <SideNavLink {...link} isActive={index === active}
+                                 key={index} setActive={setActive} index={index}/>
+                ))}
+                <div className={s.profile}>
+                    <img src={PLACEHOLDER} alt="AA"/>
+                    <SideNavLink to={'profile'} isActive={active === -1} setActive={setActive} index={-1}
+                                 text={'Abygale abbot'}/>
+                </div>
+
+                <p className={s.logout}>
+                    <Link to={'#'} onClick={() => null}>
+                    <span className={s.icon}>
+                        <FontAwesomeIcon icon={faArrowRightFromBracket}/>
+                    </span> Logout
+                    </Link>
+                </p>
+            </nav>
+        </>
     );
 }
 

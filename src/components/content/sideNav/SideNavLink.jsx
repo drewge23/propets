@@ -17,7 +17,7 @@ function SideNavLink({to, icon, text, state, isActive, setActive, index, childre
                 </p>
             </div>
             {children && isActive && children.map((child, index) =>
-                (<p className={index === subActive ? s.subActive : undefined}
+                (<p className={index === subActive ? s.subActive : undefined} key={index}
                     onClick={() => setSubActive(index)}>
                     <Link to={child.to}>
                     <span className={s.icon}>

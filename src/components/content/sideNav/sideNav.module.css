@@ -50,8 +50,8 @@
     justify-content: center;
 }
 
-.activeContainer {
-    width: 250px;
+.activeContainer, div > .activeContainer {
+    width: 100%;
     height: 40px;
     background-color: var(--white);
     border-radius: 0 17px 17px 0;
@@ -61,14 +61,39 @@
     justify-content: center;
     align-items: center;
 
-    transition: background-color 500ms;
+    transition-property: background-color;
+    transition-duration: 500ms;
 }
 
 .active a {
     color: var(--green);
-    font-weight: 550;
+    font-weight: 500;
 }
 
 .subActive a {
     color: var(--yellow);
+}
+
+.profile {
+    position: relative;
+    margin: 50px 0 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-top: 20px;
+    border-top: 1px solid var(--white);
+
+}
+.profile img {
+    position: absolute;
+    top: 25px; left: 65px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--dark-green);
+}
+.logout {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--white);
 }
