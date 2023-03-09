@@ -13,6 +13,8 @@ import Favorites from "./components/content/Favorites";
 import Profile from "./components/content/Profile";
 import React from "react";
 
+import {auth, db} from './firebaseConfig'
+
 function App() {
     return (
         <div className="App">

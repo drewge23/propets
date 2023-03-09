@@ -52,7 +52,8 @@
 
 .activeContainer, div > .activeContainer {
     width: 100%;
-    height: 40px;
+    padding: 15px 0;
+    /*height: 40px;*/
     background-color: var(--white);
     border-radius: 0 17px 17px 0;
 
