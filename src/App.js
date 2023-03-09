@@ -10,7 +10,7 @@ import Walking from "./components/content/Walking";
 import Fostering from "./components/content/Fostering";
 import VetHelp from "./components/content/VetHelp";
 import Favorites from "./components/content/Favorites";
-import Profile from "./components/content/Profile";
+import Profile from "./components/content/profile/Profile";
 import React from "react";
 
 import {auth, db} from './firebaseConfig'
