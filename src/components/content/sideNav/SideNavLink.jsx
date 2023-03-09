@@ -7,10 +7,9 @@ function SideNavLink({to, icon, text, state, isActive, setActive, index, childre
 
     return (
         <div className={(children && isActive) ? s.hasChildren : undefined}>
-            <div onClick={() => setActive(index)}
-                 className={isActive ? s.activeContainer : undefined}>
+            <div className={isActive ? s.activeContainer : undefined}>
                 <p className={isActive ? s.active : undefined}>
-                    <Link to={to} state={state}>
+                    <Link to={to} state={state} onClick={() => setActive(index)}>
                     <span className={s.icon}>
                         {icon}
                     </span> {text}
