@@ -42,6 +42,7 @@
 }
 .outlet {
     background-color: var(--white);
+    /*min-width: 650px;*/
     min-height: 90vh;
     padding: 34px;
 }

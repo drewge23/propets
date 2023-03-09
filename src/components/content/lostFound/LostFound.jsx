@@ -5,10 +5,10 @@ import s from './lostFound.module.css'
 import Input from "./Input";
 import Select from "./Select";
 import Textarea from "./Textarea";
-import DragDrop from "../../utils/DragDrop";
+import DragDrop from "../../../utils/DragDrop";
 import LostFoundDnD from "./LostFoundDnD";
 
-import LOST_FOUND from '../../images/lostFound.png'
+import LOST_FOUND from '../../../images/lostFound.png'
 
 function LostFound() {
     const location = useLocation()
@@ -58,6 +58,7 @@ function LostFound() {
     return (
         <>
             <h3> {location.state.isLost ? 'Lost your buddy?' : 'Found your buddy?'} </h3>
+
             <form onSubmit={formik.handleSubmit} className={s.form}>
                 <div className={s.upperForm}>
                     <div className={s.left}>
@@ -80,16 +81,18 @@ function LostFound() {
                     </div>
                     <div className={s.right}>
                         <img src={LOST_FOUND} alt=""/>
-                        <DragDrop setFile={setFiles}>
-                            <LostFoundDnD/>
-                        </DragDrop>
-                        <div className={s.files}>
-                            {filesArray.map((file, index) => (
-                                <div key={index} className={s.file}>
-                                    <span>{file.name}</span>
-                                    <span className={s.cross} onClick={() => spliceArray(index)}>❌</span>
-                                </div>
-                            ))}
+                        <div>
+                            <DragDrop setFile={setFiles}>
+                                <LostFoundDnD/>
+                            </DragDrop>
+                            <div className={s.files}>
+                                {filesArray.map((file, index) => (
+                                    <div key={index} className={s.file}>
+                                        <span>{file.name}</span>
+                                        <span className={s.cross} onClick={() => spliceArray(index)}>❌</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
