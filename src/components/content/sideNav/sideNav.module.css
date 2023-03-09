@@ -1,0 +1,99 @@
+.sideNav {
+    width: 100%;
+}
+
+.sideNav p {
+    width: 100%;
+    padding-left: 40%;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.sideNav a {
+    color: var(--white);
+    transition: 300ms;
+}
+
+.sideNav a:hover {
+    color: var(--yellow);
+}
+
+.sideNav a span {
+    margin-right: 10px;
+}
+
+.sideNav div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.hasChildren {
+    background-color: var(--dark-green);
+    height: 175px;
+    border-radius: 0 17px 17px 0;
+}
+
+.hasChildren p {
+    margin: 5px 0;
+}
+
+.sideNav > div > div {
+    margin: 0 0 10px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.activeContainer, div > .activeContainer {
+    width: 100%;
+    height: 40px;
+    background-color: var(--white);
+    border-radius: 0 17px 17px 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition-property: background-color;
+    transition-duration: 500ms;
+}
+
+.active a {
+    color: var(--green);
+    font-weight: 500;
+}
+
+.subActive a {
+    color: var(--yellow);
+}
+
+.profile {
+    position: relative;
+    margin: 50px 0 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-top: 20px;
+    border-top: 1px solid var(--white);
+
+}
+.profile img {
+    position: absolute;
+    top: 25px; left: 65px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--dark-green);
+}
+.logout {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--white);
+}

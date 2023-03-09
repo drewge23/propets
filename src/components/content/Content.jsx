@@ -1,7 +1,7 @@
 import {Outlet} from "react-router-dom";
 import Header from "./Header";
-import SideNav from "./SideNav";
-import Ads from "./Ads";
+import SideNav from "./sideNav/SideNav";
+import Ads from "./ads/Ads";
 import React from "react";
 import s from './content.module.css'
 
@@ -10,7 +10,7 @@ function Content() {
         <div className={s.content}>
             <Header/>
             <div className={`${s.mainBg}`}>
-                <div className={`${s.container} ${s.main}`}>
+                <div className={`${s.main}`}>
                     <div className={s.sidenav}>
                         <SideNav/>
                     </div>

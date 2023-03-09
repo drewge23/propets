@@ -38,7 +38,7 @@
     grid-template-columns: 22.5% 50% 27.5%;
 }
 .sidenav {
-    padding: 34px;
+    padding: 34px 10px 10px 0;
 }
 .outlet {
     background-color: var(--white);
