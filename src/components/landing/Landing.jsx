@@ -1,37 +1,40 @@
 import React from 'react';
-import {logo,logoBig,puppy,allPets} from "../../utils/constants";
+import {logo,logoBig,puppy,allPets, lensPawBig} from "../../utils/constants";
 import {smallIcons} from "../../utils/constants";
-
+import {Link} from "react-router-dom";
+import s from "./landing.module.css"
 
 function Landing(props) {
     return (
         <div>
-            <div className={'first'}>
-                <div className={'header'}>
+            <div className={s.header}>
                     <img src={logo} alt={'ProPets'} />
-                    <a href={''}>SignIn</a>
-                </div>
-                <div>
-                    <section className={'right'}>
-                        <h1>Welcome to your pawfessional community</h1>
-                        <div>
-                            <p>
-                                <button>I lost my pet</button>
-                                <img src={smallIcons[0]} alt={'icon loops'}/>
-                            </p>
-                            <button>I found a pet</button>
-                        </div>
-                        <p>I’m okay, just want to <a href={'#'}>join</a> the pawsome community!</p>
-                    </section>
-                    <section className={'left'}>
-                        <img src={puppy} alt={'dog'}/>
-                    </section>
-                </div>
+                    <Link to={'login'}><button>Sign in</button></Link>
             </div>
-            <div className={'second'}>
+            <div className={s.first}>
+                <section className={s.right}>
+                    <p className={s.welcome}>Welcome to your <span>pawfessional</span> community</p>
+                    <p className={s.btnOne}>
+                        <Link to={'login'}>
+                            <button>I lost my pet!</button>
+                            <img src={lensPawBig} alt={'icon loops'}/>
+                        </Link>
+                    </p>
+                    <p className={s.btnTwo}>
+                        <Link to={'login'}>
+                            <button>I found a pet!</button>
+                        </Link>
+                    </p>
+                    <p className={s.text}>I’m okay, just want to <Link to={'login'} className={s.join}>JOIN</Link> the pawsome community!</p>
+                </section>
+                <section className={s.left}>
+                    <img src={puppy} alt={'dog'}/>
+                </section>
+            </div>
+            <div className={s.second}>
                 <p>Our fluffy space for lovers, admirers, dads and moms of our four-legged, winged, tailed guys.</p>
             </div>
-            <div className={'third'}>
+            <div className={s.third}>
                 <section className={'right'}>
                     <img src={allPets} alt={'allPets'}/>
                 </section>
@@ -45,7 +48,7 @@ function Landing(props) {
                     </ul>
                 </section>
             </div>
-            <div className={'fourth'}>
+            <div className={s.fourth}>
                 <h1>Comming soon</h1>
                 <span>We are planing to open a new service, where your cats and dogs can find their love!</span>
                 <span>LOVE</span>

@@ -27,7 +27,7 @@ import manBig from '../images/man2.png'
 import pawBig from '../images/paw2.png'
 
 export {logo,logoBig}
-export {puppy,allPets}
+export {puppy,allPets,lensPawBig}
 export const smallIcons = [lens, heart, doc, dog, house,lensPaw, man, paw]
 export const bigIcons = [lensBig, heartBig, docBig, dogBig, houseBig, lensPawBig, manBig, pawBig]
 
