@@ -1,11 +1,16 @@
 import {useFormik} from "formik";
 import React from "react";
 import s from './login.module.css'
+import {auth} from "../../firebaseConfig";
+import {setUser} from "../../BLL/userSlice";
+import {useDispatch} from "react-redux";
 
 const EMAIL_REGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 const PASSWORD_REGEXP = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9#?!@$%^&*-]).{8,}$/
 
 function SignUpForm(props) {
+    const dispatch = useDispatch()
+
     const formik = useFormik({
                 initialValues: {
                     name: '',
@@ -14,8 +19,25 @@ function SignUpForm(props) {
                     repeat_password: '',
                 },
                 onSubmit: (values, {resetForm}) => {
-                    //Firebase auth goes here
-                    console.log(values)
+                    auth.createUserWithEmailAndPassword(values.email, values.password)
+                        .then((userCredential) => {
+                            auth.currentUser.updateProfile({
+                                displayName: values.name,
+                            }).then(() => {
+                                dispatch(setUser({
+                                    displayName: userCredential.user.displayName,
+                                    photoUrl: userCredential.user.photoURL,
+                                    userId: userCredential.user.uid,
+                                    email: userCredential.user.email,
+                                    facebook: null,
+                                    phone: null,
+                                }))
+                            })
+                        })
+                        .catch((error) => {
+                            console.log(error.code);
+                            console.log(error.message);
+                        });
                 },
                 validate: (values) => {
                     const errors = {};
@@ -51,7 +73,8 @@ function SignUpForm(props) {
             <div className={s.formFields}>
 
                 <div>
-                    {formik.touched.name && formik.errors.name && <span className={s.error}> {formik.errors.name} </span>}
+                    {formik.touched.name && formik.errors.name &&
+                        <span className={s.error}> {formik.errors.name} </span>}
                     <label htmlFor={'name'}> Name: </label>
                     <input
                         id={'name'}
@@ -64,7 +87,8 @@ function SignUpForm(props) {
                 </div>
 
                 <div>
-                    {formik.touched.email && formik.errors.email && <span className={s.error}> {formik.errors.email} </span>}
+                    {formik.touched.email && formik.errors.email &&
+                        <span className={s.error}> {formik.errors.email} </span>}
                     <label htmlFor={'email'}> Email: </label>
                     <input
                         id={'email'}

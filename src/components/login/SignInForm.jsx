@@ -1,18 +1,35 @@
 import {useFormik} from "formik";
 import React from "react";
 import s from './login.module.css'
+import {auth} from "../../firebaseConfig";
+import {setUser} from "../../BLL/userSlice";
+import {useDispatch} from "react-redux";
 
 const EMAIL_REGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 
 function SignInForm(props) {
+    const dispatch = useDispatch()
+
     const formik = useFormik({
                 initialValues: {
                     email: '',
                     password: '',
                 },
                 onSubmit: (values, {resetForm}) => {
-                    //Firebase auth goes here
-                    console.log(values)
+                    auth.signInWithEmailAndPassword(values.email, values.password)
+                        .then((userCredential) => {
+                                dispatch(setUser({
+                                    displayName: userCredential.user.displayName,
+                                    photoUrl: userCredential.user.photoURL,
+                                    userId: userCredential.user.uid,
+                                    email: userCredential.user.email,
+                                    facebook: null,
+                                    phone: null,
+                                }))})
+                        .catch((error) => {
+                            console.log(error.code);
+                            console.log(error.message);
+                        });
                 },
                 validate: (values) => {
                     const errors = {};

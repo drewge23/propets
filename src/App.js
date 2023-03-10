@@ -13,16 +13,9 @@ import Favorites from "./components/content/Favorites";
 import Profile from "./components/content/profile/Profile";
 import React from "react";
 
-import {auth, db} from './firebaseConfig'
-
 function App() {
     return (
         <div className="App">
-            <nav>
-                <p><Link to="/login">Login</Link></p>
-                <p><Link to="/content">Content</Link></p>
-                <p><Link to="/sjxcbxmhc">ashbdcsnhbcn</Link></p>
-            </nav>
             <Routes>
                 <Route index element={<Landing/>}/>
                 <Route path={'login'} element={<LoginPage/>}/>

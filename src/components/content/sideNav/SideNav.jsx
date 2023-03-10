@@ -17,6 +17,8 @@ import SideNavLink from "./SideNavLink";
 import {Link} from "react-router-dom";
 
 import PLACEHOLDER from '../../../images/allPets.png'
+import {auth} from "../../../firebaseConfig";
+import {useSelector} from "react-redux";
 
 function SideNav(props) {
     const [active, setActive] = useState(0)
@@ -39,7 +41,6 @@ function SideNav(props) {
             icon: <FontAwesomeIcon icon={faStethoscope}/>,
             text: 'Vet Help',
         },]
-
     const linkArray = [
         {
             to: 'home',
@@ -73,6 +74,8 @@ function SideNav(props) {
             children: null,
         }]
 
+    const user = useSelector(state => state.user)
+
     return (
         <>
             <nav className={s.sideNav}>
@@ -81,13 +84,15 @@ function SideNav(props) {
                                  key={index} setActive={setActive} index={index}/>
                 ))}
                 <div className={s.profile}>
-                    <img src={PLACEHOLDER} alt="AA"/>
+                    {user.photoUrl
+                        ? <img src={user.photoUrl} alt=""/>
+                        : <img src={PLACEHOLDER}/>}
                     <SideNavLink to={'profile'} isActive={active === -1} setActive={setActive} index={-1}
-                                 text={'Abygale abbot'}/>
+                                 text={user.displayName}/>
                 </div>
 
                 <p className={s.logout}>
-                    <Link to={'#'} onClick={() => null}>
+                    <Link to={'#'} onClick={() => auth.signOut()}>
                     <span className={s.icon}>
                         <FontAwesomeIcon icon={faArrowRightFromBracket}/>
                     </span> Logout
