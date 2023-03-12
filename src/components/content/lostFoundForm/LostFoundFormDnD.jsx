@@ -1,7 +1,7 @@
 import React from 'react';
-import s from './lostFound.module.css'
+import s from './lostFoundForm.module.css'
 
-function LostFoundDnD(props) {
+function LostFoundFormDnD(props) {
     return (
         <div className={s.dnd}>
             <span>📩</span>
@@ -10,4 +10,4 @@ function LostFoundDnD(props) {
     );
 }
 
-export default LostFoundDnD;
+export default LostFoundFormDnD;

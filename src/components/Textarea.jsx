@@ -1,5 +1,5 @@
 import React from 'react';
-import s from "./content/lostFound/lostFound.module.css";
+import s from "./content/lostFoundForm/lostFoundForm.module.css";
 
 function Textarea({formik, label, placeholder, upTo = null}) {
     const labelStr = label.split('_').join(' ')

@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router";
 import {useFormik} from "formik";
-import s from './lostFound.module.css'
+import s from './lostFoundForm.module.css'
 import Input from "../../Input";
 import Select from "../../Select";
 import Textarea from "../../Textarea";
 import DragDrop from "../../../utils/DragDrop";
-import LostFoundDnD from "./LostFoundDnD";
+import LostFoundFormDnD from "./LostFoundFormDnD";
 
 import LOST_FOUND from '../../../images/lostFound.png'
 
-function LostFound() {
+function LostFoundForm() {
     const location = useLocation()
     const [files, setFiles] = useState()
     const [filesArray, setFilesArray] = useState([])
@@ -83,7 +83,7 @@ function LostFound() {
                         <img src={LOST_FOUND} alt=""/>
                         <div>
                             <DragDrop setFile={setFiles}>
-                                <LostFoundDnD/>
+                                <LostFoundFormDnD/>
                             </DragDrop>
                             <div className={s.files}>
                                 {filesArray.map((file, index) => (
@@ -147,4 +147,4 @@ function LostFound() {
     );
 }
 
-export default LostFound;
+export default LostFoundForm;

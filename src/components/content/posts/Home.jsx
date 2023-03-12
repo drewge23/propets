@@ -8,12 +8,7 @@ function Home(props) {
     const [posts] = useCollection(db.collection('posts').where('type', '==', 'home'))
 
     return (
-        <>
-            <Link to={'./newpost'}>
-                <span style={{backgroundColor: 'lightblue', padding: 10}}>New post</span>
-            </Link>
-            <Posts title={''} posts={posts}/>
-        </>
+        <Posts title={''} posts={posts}/>
     )
 }
 

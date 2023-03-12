@@ -4,7 +4,7 @@ import Landing from "./components/landing/Landing";
 import LoginPage from "./components/login/LoginPage";
 import Content from "./components/content/Content";
 import Home from "./components/content/posts/Home";
-import LostFound from "./components/content/lostFound/LostFound";
+import LostFoundForm from "./components/content/lostFoundForm/LostFoundForm";
 import Hotels from "./components/content/posts/Hotels";
 import Walking from "./components/content/posts/Walking";
 import Fostering from "./components/content/posts/Fostering";
@@ -17,6 +17,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "./firebaseConfig";
 import {useDispatch} from "react-redux";
 import {setUser} from "./BLL/userSlice";
+import LostFound from "./components/content/LostFound";
 
 // const routes = [
 //     {
@@ -86,6 +87,7 @@ function App() {
 
                     <Route path={'newpost'} element={<NewPost/>}/>
                     <Route path={'lost&found'} element={<LostFound/>}/>
+                    <Route path={'lost&foundform'} element={<LostFoundForm/>}/>
                     <Route path={'profile'} element={<Profile/>}/>
                     <Route path={'*'} element={<Home/>}/>
                 </Route>

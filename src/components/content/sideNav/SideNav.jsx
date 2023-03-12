@@ -41,6 +41,7 @@ function SideNav(props) {
             icon: <FontAwesomeIcon icon={faStethoscope}/>,
             text: 'Vet Help',
         },]
+
     const linkArray = [
         {
             to: 'home',
@@ -61,7 +62,7 @@ function SideNav(props) {
             state: {isLost: false},
             children: null,
         }, {
-            to: 'services',
+            to: '#',
             icon: <FontAwesomeIcon icon={faBullhorn}/>,
             text: 'Services',
             state: null,
