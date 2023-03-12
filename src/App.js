@@ -12,6 +12,7 @@ import VetHelp from "./components/content/VetHelp";
 import Favorites from "./components/content/Favorites";
 import Profile from "./components/content/profile/Profile";
 import React from "react";
+import NewPost from "./components/content/NewPost";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path={'content'} element={<Content />}>
                     <Route index element={<Home/>}/>
                     <Route path={'home'} element={<Home/>}/>
+                    <Route path={'newpost'} element={<NewPost/>}/>
                     <Route path={'lost&found'} element={<LostFound/>}/>
                     <Route path={'hotels'} element={<Hotels/>}/>
                     <Route path={'walking'} element={<Walking/>}/>

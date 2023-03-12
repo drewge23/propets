@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router";
 import {useFormik} from "formik";
 import s from './lostFound.module.css'
-import Input from "./Input";
-import Select from "./Select";
-import Textarea from "./Textarea";
+import Input from "../../Input";
+import Select from "../../Select";
+import Textarea from "../../Textarea";
 import DragDrop from "../../../utils/DragDrop";
 import LostFoundDnD from "./LostFoundDnD";
 

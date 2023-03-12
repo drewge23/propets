@@ -1,5 +1,5 @@
 import React from 'react';
-import s from "./lostFound.module.css";
+import s from "./content/lostFound/lostFound.module.css";
 
 function Input({formik, label, type = 'text', placeholder}) {
     return (
