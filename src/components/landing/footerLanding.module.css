@@ -1,0 +1,33 @@
+footer{
+    height: 190px;
+    padding: 0 151px;
+    background-color: var(--dark-green);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+img{
+    max-width: 200px;
+}
+
+.center p{
+    text-align: left;
+    font-size: 12px;
+    max-width: 200px;
+}
+
+.icons{
+    max-width: 250px;
+    height: 80px;
+    font-size: 16px;
+    color: var(--white);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    row-gap: 10px;
+    column-gap: 20px;
+}
