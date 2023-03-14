@@ -1,7 +1,11 @@
 footer{
-    height: 190px;
-    padding: 0 151px;
     background-color: var(--dark-green);
+    padding: 0 151px;
+}
+
+.container{
+    width: 90%;
+    height: 190px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,10 +16,19 @@ img{
     max-width: 200px;
 }
 
-.center p{
+.social p{
     text-align: left;
     font-size: 12px;
     max-width: 200px;
+    color: var(--white)
+}
+
+.social .brands{
+    font-size: 29px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-bottom: 20px;
 }
 
 .icons{
