@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import s from '../profile/profile.module.css'
 import {profileAv} from "../../../utils/constants";
 import {useFormik} from "formik";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCamera, faPencil, faFloppyDisk as save} from '@fortawesome/free-solid-svg-icons'
 
 function Profile(props) {
 
@@ -41,8 +43,11 @@ function Profile(props) {
                         </button>
                     </div>
                     <div className={s.main}>
-                        <div className={s.avatar}>
-                            <img src={profileAv} alt={'profile photo'}/>
+                        <div className={s.mainInfo}>
+                            <div className={s.avatar}>
+                                <img src={profileAv} alt={'profile photo'}/>
+                                <button className={s.camera}><FontAwesomeIcon icon={faCamera}/></button>
+                            </div>
                             { changeName
                                 ? <input
                                     id={'name'}
@@ -55,7 +60,9 @@ function Profile(props) {
                                 />
                                 : <h3>Anna Smith</h3>
                             }
-                            <button type={'submit'} onClick={()=>setChangeName(!changeName)}>🖉</button>
+                            <button className={s.pencil} type={'submit'} onClick={()=>setChangeName(!changeName)}>
+                                <FontAwesomeIcon icon={faPencil }/>
+                            </button>
                         </div>
                         <div className={s.data}>
                             <p>
@@ -102,7 +109,10 @@ function Profile(props) {
                 </div>
                 <div className={s.btns}>
                     <button className={s.btnCancel}>Cancel</button>
-                    <button className={s.btnSave} type={"submit"}>💾Save changes</button>
+                    <button className={s.btnSave} type={"submit"}>
+                        <span className={s.saveIcon}><FontAwesomeIcon icon={save}/></span>
+                        Save changes
+                    </button>
                 </div>
             </form>
         </>
