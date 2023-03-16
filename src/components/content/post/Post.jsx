@@ -17,14 +17,14 @@ function Post() {
                 <button className={s.more}>...more</button>
             </div>
             <span className={s.menu} onClick={'#'}>•••</span>
-            <div className={s.settings}>
-                <button>
-                    Hide from feed
-                </button>
-                <button>
-                    Unfollow
-                </button>
-            </div>
+            {/*<div className={s.settings}>*/}
+            {/*    <button>*/}
+            {/*        Hide from feed*/}
+            {/*    </button>*/}
+            {/*    <button>*/}
+            {/*        Unfollow*/}
+            {/*    </button>*/}
+            {/*</div>*/}
             <button className={s.fav}>
                 <FontAwesomeIcon icon={faStar} />
             </button>
