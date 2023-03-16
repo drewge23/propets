@@ -1,0 +1,36 @@
+.post{
+    width: 100%;
+    box-shadow: 0 3px 6px #00000029;
+}
+
+.main{
+    display: grid;
+    grid-template-columns: 80px 540px 100px;
+    grid-template-rows: auto;
+}
+
+.avatar{
+    border: 1px solid var(--white);
+    width: 50px;
+    border-radius: 50% ;
+    box-shadow: 0 3px 6px #00000029;
+}
+
+.name{
+    font-size: 16px;
+    margin-bottom: 30px;
+    text-align: left;
+    color: var(--dark-green);
+    margin-bottom: 0;
+}
+
+.time{
+    font-size: 12px;
+    color: var(--gray);
+}
+
+
+
+.settings{
+    display: none;
+}
