@@ -1,12 +1,15 @@
 .post{
     width: 100%;
     box-shadow: 0 3px 6px #00000029;
-}
-
-.main{
+    padding: 15px;
     display: grid;
-    grid-template-columns: 80px 540px 100px;
-    grid-template-rows: auto;
+    grid-template-columns: 50px auto 50px;
+    grid-template-rows: 50px auto;
+    column-gap: 20px;
+    row-gap: 5px;
+    grid-template-areas:
+    "avatar name menu"
+    ". main fav";
 }
 
 .avatar{
@@ -14,12 +17,17 @@
     width: 50px;
     border-radius: 50% ;
     box-shadow: 0 3px 6px #00000029;
+    grid-area: avatar;
 }
 
 .name{
+    grid-area: name;
+    text-align: left;
+}
+
+.name h3{
     font-size: 16px;
     margin-bottom: 30px;
-    text-align: left;
     color: var(--dark-green);
     margin-bottom: 0;
 }
@@ -29,7 +37,37 @@
     color: var(--gray);
 }
 
+.menu{
+    grid-area: menu;
+    background-color: transparent;
+    width: 20px;
+    height: 18px;
+    font-size: 18px;
+    color: var(--gray);
+    text-align: right;
+    margin-left: 30px;
+}
 
+.main{
+    grid-area: main;
+    text-align: left;
+}
+
+.more{
+
+}
+
+.fav{
+    grid-area: fav;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    font-size: 18px;
+    color: var(--gray);
+    text-align: right;
+    margin-left: 30px;
+    margin-top: 30px;
+}
 
 .settings{
     display: none;
