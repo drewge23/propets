@@ -14,7 +14,7 @@ import paw from '../images/paw.png'
 
 //for landing
 import puppy from '../images/puppy.png'
-import allPets from '../images/allPets.png'
+import allPets from '../images/allPets2.png'
 
 //big icons
 import lensBig from '../images/lens2.png'
