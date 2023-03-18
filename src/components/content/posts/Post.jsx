@@ -3,13 +3,16 @@ import {getStorage, ref, getDownloadURL} from "firebase/storage";
 import s from "./post.module.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-regular-svg-icons";
-import {getPostTime} from "../../../utils/constants";
+import {getPostTime, profilePhoto} from "../../../utils/constants";
 
 
 function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
     const storage = getStorage();
     const imageRef = ref(storage, image);
 
+    if (!userPicUrl) userPicUrl = profilePhoto
+
+    const [showFullText, setShowFullText] = useState(true)
     const [imageUrl, setImageUrl] = useState(null)
     getDownloadURL(imageRef)
         .then((url) => {
@@ -43,9 +46,9 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
                     <span className={s.time}>{getPostTime(createdAt)}</span>
                 </div>
                 <div className={s.main}>
-                    {imageUrl && <img src={imageUrl} alt={'pic'}/>}
-                    <p>{text}</p>
-                    <button className={s.more}>...more</button>
+                    {imageUrl && <img src={imageUrl} alt={'pic'} className={s.imageInPost}/>}
+                    <p className={s.text} numberOfLines={2}>{text}</p>
+                    <span className={s.more}>...more</span>
                 </div>
                 <span className={s.menu}>•••</span>
                 {/*<div className={s.settings}>*/}

@@ -15,6 +15,8 @@
 .avatar{
     border: 1px solid var(--white);
     width: 50px;
+    height: 50px;
+    object-fit: cover;
     border-radius: 50% ;
     box-shadow: 0 3px 6px #00000029;
     grid-area: avatar;
@@ -50,11 +52,28 @@
 
 .main{
     grid-area: main;
+}
+
+.text{
     text-align: left;
+    font-size: 14px;
+    /*height: 50px;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+}
+
+.imageInPost{
+    text-align: center;
 }
 
 .more{
+    background-color: transparent;
+    color: var(--light-green);
+    font-size: 14px;
+}
 
+.more:hover{
+    cursor: pointer;
 }
 
 .fav{

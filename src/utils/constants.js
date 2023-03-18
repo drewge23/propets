@@ -26,13 +26,13 @@ import lensPawBig from '../images/lensPaw2.png'
 import manBig from '../images/man2.png'
 import pawBig from '../images/paw2.png'
 
-import profileAv from '../images/profile1.jpg'
+import profilePhoto from '../images/profile1.jpg'
 
 export {logo,logoBig}
 export {puppy,allPets,lensPawBig}
 export const smallIcons = [lens, heart, doc, dog, house,lensPaw, man, paw]
 export const bigIcons = [lensBig, heartBig, docBig, dogBig, houseBig, lensPawBig, manBig, pawBig]
-export {profileAv}
+export {profilePhoto}
 
 
 export function getPostTime(createdAt){
