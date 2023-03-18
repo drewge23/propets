@@ -10,9 +10,10 @@ function LostFound(props) {
         let tempArr = location.pathname.split('/')
         return tempArr[tempArr.length - 1]
     }()
-    const [posts] = useCollection(db.collection('lost_and_found').where('status', '==', lastParam))
 
-    console.log(posts?.docs[0]?.data() || '')
+    const [posts] = useCollection(
+        db.collection('lost_and_found').where('status', '==', lastParam)
+    )
 
     return (
         <div>

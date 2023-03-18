@@ -12,8 +12,14 @@ import LOST_FOUND from '../../../../images/lostFound.png'
 import {db} from "../../../../firebaseConfig";
 import {getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
+import {useSelector} from "react-redux";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faArrowUpFromBracket
+} from "@fortawesome/free-solid-svg-icons";
 
 function LostFoundForm() {
+    const user = useSelector(state => state.user)
     const location = useLocation()
     // const [files, setFiles] = useState()
     // const [filesArray, setFilesArray] = useState([])
@@ -41,11 +47,11 @@ function LostFoundForm() {
                 color: "",
                 description: "",
                 distinctive_features: "",
-                email: "",
-                facebook: "",
+                email: user.email || '',
+                facebook: user.facebook || '',
                 height: "",
                 location: "",
-                phone: "",
+                phone: user.phone || '',
                 sex: "",
             },
             onSubmit: (values) => {
@@ -100,13 +106,8 @@ function LostFoundForm() {
                             {/*<DragDrop setFile={setImage}>*/}
                             {/*    <LostFoundFormDnD/>*/}
                             {/*</DragDrop>*/}
-                            <label htmlFor="lf_image" style={{
-                                backgroundColor: '#179be3',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}>
-                                Select a file please
+                            <label htmlFor="lf_image" className={s.download}>
+                                <FontAwesomeIcon icon={faArrowUpFromBracket}/>
                                 <input type="file" id={'lf_image'}
                                        style={{display: 'none'}}
                                        onChange={(e) => setImage(e.target.files[0])}/>
@@ -163,8 +164,8 @@ function LostFoundForm() {
                 </div>
                 <div className={s.footer}>
                     <div>
-                        <img src={LOST_FOUND} alt=""/>
-                        <span>{'Anna Smith'}</span>
+                        <img src={user.photoUrl || LOST_FOUND} alt=""/>
+                        <span>{user.displayName}</span>
                     </div>
                     <button type={'submit'} className={'filledBtn'}> Publish</button>
                 </div>

@@ -35,7 +35,7 @@ function LostFoundPost({
         });
 
     return (
-        <div>
+        <div style={{marginBottom: '2rem'}}>
             <p>{breed}</p>
             <p>{color}</p>
             <p>{description}</p>

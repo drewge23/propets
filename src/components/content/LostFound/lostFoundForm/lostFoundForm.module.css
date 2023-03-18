@@ -28,9 +28,11 @@ textarea {
     border: 1px solid var(--light-green);
     text-wrap: normal;
 }
+
 .upTo {
     color: var(--green);
 }
+
 .upperForm {
     display: grid;
     grid-template-columns: 50% 50%;
@@ -54,6 +56,7 @@ img {
     margin-top: 2rem;
     gap: 1rem;
 }
+
 .dnd {
     width: 120px;
     font-size: 12px;
@@ -88,7 +91,6 @@ img {
     display: flex;
     justify-content: space-between;
 }
-
 .cross {
     cursor: pointer;
 }
@@ -98,28 +100,52 @@ img {
     justify-content: center;
     width: 100%;
 }
+
 .contacts {
     font-size: 12px;
     color: var(--black);
     margin-right: 1rem;
     margin-top: 6px;
 }
+
 .footer {
     display: flex;
     justify-content: space-between;
 }
+
 .footer div {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
+
 .footer img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
 
-@media screen and (max-width: 1200px){
+.download {
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 2rem;
+    color: var(--dark-green);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: 300ms;
+}
+
+.download:hover {
+    cursor: pointer;
+    background-color: rgba(134, 134, 134, 0.19);
+}
+
+@media screen and (max-width: 1200px) {
     .right div {
         flex-direction: column;
         justify-content: center;
