@@ -3,33 +3,15 @@ import {getStorage, ref, getDownloadURL} from "firebase/storage";
 import s from "../post/post.module.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-regular-svg-icons";
+import {getPostTime} from "../../../utils/constants";
 
-// createdAt - время, image, text, userName, userPicUrl - аватарка
 
 function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
     const storage = getStorage();
     const imageRef = ref(storage, image);
 
 
-    const getTime = ()=>{
-        const currentTime  = Date.now() //toLocaleString()
-        const postsTimeInSeconds = createdAt.toMillis()
 
-        const differentTime = currentTime-postsTimeInSeconds
-
-        return differentTime
-    }
-
-    const fireBaseTime = new Date(
-        createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000,
-    )
-    console.log(new Date(createdAt.toMillis()))
-
-    const date = fireBaseTime.toDateString()
-    const atTime = fireBaseTime.toLocaleTimeString()
-    // const time = fireBaseTime.toString() //date + ' ' + atTime
-
-const time = getTime()
 
     const [imageUrl, setImageUrl] = useState(null)
     getDownloadURL(imageRef)
@@ -61,14 +43,14 @@ const time = getTime()
                 <img src={userPicUrl} alt={'avatar'} className={s.avatar}/>
                 <div className={s.name}>
                     <h3>{userName}</h3>
-                    <span className={s.time}>{time}</span>
+                    <span className={s.time}>{getPostTime(createdAt)}</span>
                 </div>
                 <div className={s.main}>
                     {imageUrl && <img src={imageUrl} alt={'pic'}/>}
                     <p>{text}</p>
                     <button className={s.more}>...more</button>
                 </div>
-                <span className={s.menu} onClick={'#'}>•••</span>
+                <span className={s.menu}>•••</span>
                 {/*<div className={s.settings}>*/}
                 {/*    <button>*/}
                 {/*        Hide from feed*/}
