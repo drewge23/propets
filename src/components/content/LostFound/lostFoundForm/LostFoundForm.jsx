@@ -2,31 +2,44 @@ import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router";
 import {useFormik} from "formik";
 import s from './lostFoundForm.module.css'
-import Input from "../../Input";
-import Select from "../../Select";
-import Textarea from "../../Textarea";
-import DragDrop from "../../../utils/DragDrop";
+import Input from "../../../Input";
+import Select from "../../../Select";
+import Textarea from "../../../Textarea";
+import DragDrop from "../../../../utils/DragDrop";
 import LostFoundFormDnD from "./LostFoundFormDnD";
 
-import LOST_FOUND from '../../../images/lostFound.png'
+import LOST_FOUND from '../../../../images/lostFound.png'
+import {db} from "../../../../firebaseConfig";
+import {getStorage, ref, uploadBytes} from "firebase/storage";
+import {nanoid} from "@reduxjs/toolkit";
+import {useSelector} from "react-redux";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faArrowUpFromBracket
+} from "@fortawesome/free-solid-svg-icons";
 
 function LostFoundForm() {
+    const user = useSelector(state => state.user)
     const location = useLocation()
-    const [files, setFiles] = useState()
-    const [filesArray, setFilesArray] = useState([])
-    useEffect(() => {
-        if (!files) return
-        let temp = []
-        for (let file of files) {
-            temp.push(file)
-        }
-        setFilesArray([...filesArray, ...temp])
-    }, [files])
-    const spliceArray = (index) => {
-        let temp = [...filesArray]
-        temp.splice(index, 1)
-        setFilesArray(temp)
-    }
+    // const [files, setFiles] = useState()
+    // const [filesArray, setFilesArray] = useState([])
+    // useEffect(() => {
+    //     if (!files) return
+    //     let temp = []
+    //     for (let file of files) {
+    //         temp.push(file)
+    //     }
+    //     setFilesArray([...filesArray, ...temp])
+    // }, [files])
+    // const spliceArray = (index) => {
+    //     let temp = [...filesArray]
+    //     temp.splice(index, 1)
+    //     setFilesArray(temp)
+    // }
+
+    const [image, setImage] = useState(null)
+    const storage = getStorage()
+    const lostFoundImageRef = ref(storage, `lost_and_found/image_${nanoid()}`);
 
     const formik = useFormik({
             initialValues: {
@@ -34,16 +47,23 @@ function LostFoundForm() {
                 color: "",
                 description: "",
                 distinctive_features: "",
-                email: "",
-                facebook: "",
+                email: user.email || '',
+                facebook: user.facebook || '',
                 height: "",
                 location: "",
-                phone: "",
+                phone: user.phone || '',
                 sex: "",
-                type: "",
             },
             onSubmit: (values) => {
-                console.log({...values, images: filesArray})
+                uploadBytes(lostFoundImageRef, image)
+                    .then((snapshot) => {
+                        db.collection('lost_and_found').add({
+                            ...values,
+                            status: location.state.isLost ? 'lost' : 'found',
+                            image: snapshot.metadata.fullPath
+                        })
+                        console.log({...values, image: snapshot.metadata.fullPath})
+                    })
             },
             validate: (values) => {
                 const errors = {};
@@ -52,6 +72,7 @@ function LostFoundForm() {
             },
             validateOnBlur: false,
             validateOnChange: false,
+            validateOnMount: false,
         }
     )
 
@@ -82,14 +103,20 @@ function LostFoundForm() {
                     <div className={s.right}>
                         <img src={LOST_FOUND} alt=""/>
                         <div>
-                            <DragDrop setFile={setFiles}>
-                                <LostFoundFormDnD/>
-                            </DragDrop>
+                            {/*<DragDrop setFile={setImage}>*/}
+                            {/*    <LostFoundFormDnD/>*/}
+                            {/*</DragDrop>*/}
+                            <label htmlFor="lf_image" className={s.download}>
+                                <FontAwesomeIcon icon={faArrowUpFromBracket}/>
+                                <input type="file" id={'lf_image'}
+                                       style={{display: 'none'}}
+                                       onChange={(e) => setImage(e.target.files[0])}/>
+                            </label>
                             <div className={s.files}>
-                                {filesArray.map((file, index) => (
+                                {image && [image].map((file, index) => (
                                     <div key={index} className={s.file}>
-                                        <span>{file.name}</span>
-                                        <span className={s.cross} onClick={() => spliceArray(index)}>❌</span>
+                                        <span>{file.name || '1. '}</span>
+                                        <span className={s.cross} onClick={() => setImage(null)}>❌</span>
                                     </div>
                                 ))}
                             </div>
@@ -137,8 +164,8 @@ function LostFoundForm() {
                 </div>
                 <div className={s.footer}>
                     <div>
-                        <img src={LOST_FOUND} alt=""/>
-                        <span>{'Anna Smith'}</span>
+                        <img src={user.photoUrl || LOST_FOUND} alt=""/>
+                        <span>{user.displayName}</span>
                     </div>
                     <button type={'submit'} className={'filledBtn'}> Publish</button>
                 </div>

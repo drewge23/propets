@@ -4,29 +4,110 @@ import {profileAv} from "../../../utils/constants";
 import {useFormik} from "formik";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCamera, faPencil, faFloppyDisk as save} from '@fortawesome/free-solid-svg-icons'
+import {useAuthState} from "react-firebase-hooks/auth";
+import {auth, db} from "../../../firebaseConfig";
+import {setUser, updateName, updatePhoto} from "../../../BLL/userSlice";
+import {useDispatch} from "react-redux";
+import {EmailAuthProvider} from "@firebase/auth";
+import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
+import {nanoid} from "@reduxjs/toolkit";
+
+const EMAIL_REGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+const PHONE_REGEXP = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/
 
 function Profile(props) {
-
     const [profile, setProfile] = useState(true)
     const [changeName, setChangeName] = useState(false)
 
+    const [user] = useAuthState(auth)
+    const dispatch = useDispatch()
+
+    const [photo, setPhoto] = useState(null)
+    const storage = getStorage();
+    const photoRef = ref(storage, `users/photo_${nanoid()}`);
+
+    const uploadPhoto = () => {
+        uploadBytes(photoRef, photo)
+            .then((snapshot) => {
+                getDownloadURL(photoRef)
+                    .then((url) => {
+                        auth.currentUser.updateProfile({
+                            photoURL: url,
+                        })
+                            .then(() => dispatch(updatePhoto(url)))
+                    })
+                    .catch((error) => {
+                        switch (error.code) {
+                            case 'storage/object-not-found':
+                                // File doesn't exist
+                                break;
+                            case 'storage/unauthorized':
+                                // User doesn't have permission to access the object
+                                break;
+                            case 'storage/canceled':
+                                // User canceled the upload
+                                break;
+                            case 'storage/unknown':
+                                // Unknown error occurred, inspect the server response
+                                break;
+                            default:
+                                alert('Something went wrong')
+                        }
+                    });
+            })
+            .catch((e) => alert(e.message()))
+    }
+
     const formik = useFormik({
         initialValues: {
-            name: 'Anna Smith',
-            email: 'fromDB',
+            name: user?.displayName || '',
+            email: user?.email || '',
             fb: '',
-            photo: '',
-            phone: ''
+            phone: user?.phoneNumber || '',
         },
         onSubmit(values) {
-        },
-        validate: (values) => {
-            const errors = {};
+            // auth.currentUser.reauthenticateWithCredential(
+            //     EmailAuthProvider.credential(user.email, prompt('Enter your password please'))
+            // ).then(() => {
+            Promise.all([
+                auth.currentUser.updateProfile({
+                    displayName: values.name,
+                }),
+                // auth.currentUser.updateEmail(values.email),
+                // auth.currentUser.updatePhoneNumber(values.phone),
+            ])
+                .then(() => {
+                    dispatch(updateName(values.name))
+                })
+                .catch((err) => {
+                    console.log(err)
+                    alert(err.message())
+                })
 
-            return errors;
+            if (photo) uploadPhoto()
         },
-        validateOnBlur: false,
-        validateOnChange: true,
+        validate:
+            (values) => {
+                const errors = {};
+
+                if (!values.name || values.name.trim() === '') {
+                    errors.name = 'Required';
+                }
+                if (!values.email) {
+                    errors.email = 'Required';
+                } else if (!EMAIL_REGEXP.test(values.email)) {
+                    errors.email = 'Invalid email address';
+                }
+
+                if (values.phone && !PHONE_REGEXP.test(values.phone)) {
+                    errors.phone = 'Invalid phone format';
+                }
+
+                return errors;
+            },
+        validateOnBlur: true,
+        validateOnChange: false,
+        validateOnMount: false,
     })
 
     return (
@@ -45,10 +126,22 @@ function Profile(props) {
                     <div className={s.main}>
                         <div className={s.mainInfo}>
                             <div className={s.avatar}>
-                                <img src={profileAv} alt={'profile photo'}/>
-                                <button className={s.camera}><FontAwesomeIcon icon={faCamera}/></button>
+                                <img src={user.photoURL || profileAv} alt={'profile photo'}/>
+                                <label htmlFor="photo" className={s.camera}>
+                                    <FontAwesomeIcon icon={faCamera}/>
+                                    <input
+                                        id={'photo'}
+                                        name={'photo'}
+                                        type={'file'}
+                                        onChange={(e) => {
+                                            setPhoto(e.target.files[0])
+                                            formik.submitForm()
+                                        }}
+                                        style={{display: "none"}}
+                                    />
+                                </label>
                             </div>
-                            { changeName
+                            {changeName
                                 ? <input
                                     id={'name'}
                                     name={'name'}
@@ -58,10 +151,10 @@ function Profile(props) {
                                     value={formik.values.name}
                                     className={s.name}
                                 />
-                                : <h3>Anna Smith</h3>
+                                : <h3>{user?.displayName || ''}</h3>
                             }
-                            <button className={s.pencil} type={'submit'} onClick={()=>setChangeName(!changeName)}>
-                                <FontAwesomeIcon icon={faPencil }/>
+                            <button className={s.pencil} type={'submit'} onClick={() => setChangeName(!changeName)}>
+                                <FontAwesomeIcon icon={faPencil}/>
                             </button>
                         </div>
                         <div className={s.data}>

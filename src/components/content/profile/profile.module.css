@@ -36,10 +36,12 @@ h3 {
 .avatar img{
     border: 1px solid var(--white);
     width: 50px;
+    height: 50px;
     border-radius: 50% ;
 }
 
 .mainInfo .avatar .camera{
+    padding-top: 1px;
     margin: 0;
     background-color: var(--white);
     color: var(--light-green);
@@ -53,6 +55,12 @@ h3 {
     position: absolute;
     right: 0;
     bottom: 0;
+
+    transition: 300ms;
+}
+.mainInfo .avatar .camera:hover {
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24);
 }
 
 .mainInfo h3{
