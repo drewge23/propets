@@ -50,13 +50,13 @@ function SideNav(props) {
             state: null,
             children: null,
         }, {
-            to: 'lost&found',
+            to: 'lost',
             icon: <FontAwesomeIcon icon={faSearch}/>,
             text: 'Lost',
             state: {isLost: true},
             children: null,
         }, {
-            to: 'lost&found',
+            to: 'found',
             icon: <FontAwesomeIcon icon={faPaw}/>,
             text: 'Found',
             state: {isLost: false},

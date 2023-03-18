@@ -19,11 +19,11 @@ function Header(props) {
                     <img src={logo} alt=""/>
 
                     <div>
-                        {!(lastParam === 'lost&found' || lastParam === 'profile')
+                        {!(lastParam === 'lost' || lastParam === 'found' || lastParam === 'profile')
                             && <Link to={'./newpost'}>
                                 <span style={{backgroundColor: 'lightblue', padding: 10}}>New post</span>
                             </Link>}
-                        {lastParam === 'lost&found'
+                        {(lastParam === 'lost' || lastParam === 'found')
                             && <>
                                 <Link to={'lost&foundform'} state={{isLost: true}}>
                                     <span style={{backgroundColor: 'yellow', padding: 10}}>I lost a pet</span>
