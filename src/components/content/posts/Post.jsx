@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {getStorage, ref, getDownloadURL} from "firebase/storage";
-import s from "../post/post.module.css";
+import s from "./post.module.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-regular-svg-icons";
 import {getPostTime} from "../../../utils/constants";
@@ -9,9 +9,6 @@ import {getPostTime} from "../../../utils/constants";
 function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
     const storage = getStorage();
     const imageRef = ref(storage, image);
-
-
-
 
     const [imageUrl, setImageUrl] = useState(null)
     getDownloadURL(imageRef)
