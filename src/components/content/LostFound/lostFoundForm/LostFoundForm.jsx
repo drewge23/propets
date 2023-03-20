@@ -9,7 +9,7 @@ import DragDrop from "../../../../utils/DragDrop";
 import LostFoundFormDnD from "./LostFoundFormDnD";
 
 import LOST_FOUND from '../../../../images/lostFound.png'
-import {db} from "../../../../firebaseConfig";
+import {auth, db} from "../../../../firebaseConfig";
 import {getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
 import {useSelector} from "react-redux";
@@ -42,7 +42,7 @@ function LostFoundForm() {
     const lostFoundImageRef = ref(storage, `lost_and_found/image_${nanoid()}`);
 
     const formik = useFormik({
-            initialValues: {
+            initialValues: location.state.postInfo || {
                 breed: "",
                 color: "",
                 description: "",
@@ -53,16 +53,31 @@ function LostFoundForm() {
                 location: "",
                 phone: user.phone || '',
                 sex: "",
+                userId: auth.currentUser.uid,
             },
             onSubmit: (values) => {
                 uploadBytes(lostFoundImageRef, image)
                     .then((snapshot) => {
-                        db.collection('lost_and_found').add({
-                            ...values,
-                            status: location.state.isLost ? 'lost' : 'found',
-                            image: snapshot.metadata.fullPath
-                        })
+                        if (location.state.postId) {
+                            db.collection('lost_and_found')
+                                .doc(location.state.postId).set({
+                                ...values,
+                                status: location.state.isLost ? 'lost' : 'found',
+                                image: snapshot.metadata.fullPath || location.state.post.image,
+                                createdAt: new Date(),
+                            })
+                                .then(() => alert('Post updated!'))
+                        } else {
+                            db.collection('lost_and_found').add({
+                                ...values,
+                                status: location.state.isLost ? 'lost' : 'found',
+                                image: snapshot.metadata.fullPath,
+                                createdAt: new Date(),
+                            })
+                                .then(() => alert('Post created!'))
+                        }
                         console.log({...values, image: snapshot.metadata.fullPath})
+                        formik.resetForm()
                     })
             },
             validate: (values) => {

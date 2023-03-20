@@ -12,7 +12,7 @@ import VetHelp from "./components/content/posts/VetHelp";
 import Favorites from "./components/content/posts/Favorites";
 import Profile from "./components/content/profile/Profile";
 import React, {useEffect} from "react";
-import NewPost from "./components/content/NewPost";
+import NewPost from "./components/content/posts/NewPost";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "./firebaseConfig";
 import {useDispatch} from "react-redux";

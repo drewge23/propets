@@ -11,6 +11,7 @@ import {useDispatch} from "react-redux";
 import {EmailAuthProvider} from "@firebase/auth";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
+import Activities from "./Activities";
 
 const EMAIL_REGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 const PHONE_REGEXP = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/
@@ -123,7 +124,7 @@ function Profile(props) {
                                 onClick={() => setProfile(false)}>Activities
                         </button>
                     </div>
-                    <div className={s.main}>
+                    {profile && <div className={s.main}>
                         <div className={s.mainInfo}>
                             <div className={s.avatar}>
                                 <img src={user.photoURL || profileAv} alt={'profile photo'}/>
@@ -198,15 +199,16 @@ function Profile(props) {
                                     <span className={s.error}> {formik.errors.fb} </span>}
                             </p>
                         </div>
-                    </div>
+                    </div>}
+                    {!profile && <Activities />}
                 </div>
-                <div className={s.btns}>
+                {profile && <div className={s.btns}>
                     <button className={s.btnCancel}>Cancel</button>
                     <button className={s.btnSave} type={"submit"}>
                         <span className={s.saveIcon}><FontAwesomeIcon icon={save}/></span>
                         Save changes
                     </button>
-                </div>
+                </div>}
             </form>
         </>
     );
