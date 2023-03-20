@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import s from '../profile/profile.module.css'
-import {profileAv} from "../../../utils/constants";
+import {profilePhoto} from "../../../utils/constants";
 import {useFormik} from "formik";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCamera, faPencil, faFloppyDisk as save} from '@fortawesome/free-solid-svg-icons'
@@ -126,7 +126,7 @@ function Profile(props) {
                     <div className={s.main}>
                         <div className={s.mainInfo}>
                             <div className={s.avatar}>
-                                <img src={user.photoURL || profileAv} alt={'profile photo'}/>
+                                <img src={user.photoURL || profilePhoto} alt={'profile photo'}/>
                                 <label htmlFor="photo" className={s.camera}>
                                     <FontAwesomeIcon icon={faCamera}/>
                                     <input
