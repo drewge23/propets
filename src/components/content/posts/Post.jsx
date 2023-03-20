@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {getStorage, ref, getDownloadURL} from "firebase/storage";
 import s from "./post.module.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar, faEyeSlash} from "@fortawesome/free-regular-svg-icons";
-import {faUserXmark, faX} from "@fortawesome/free-solid-svg-icons";
+import {faUserXmark, faX, faStar as fullStar} from "@fortawesome/free-solid-svg-icons";
 import {getPostTime, profilePhoto} from "../../../utils/constants";
+import {auth, db} from "../../../firebaseConfig";
+import {setDoc, updateDoc, arrayUnion} from "firebase/firestore";
+import {useCollection, useDocument} from "react-firebase-hooks/firestore";
 
-
-function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
+function Post({createdAt, image, text, type, userId, userName, userPicUrl, postId}) {
     const storage = getStorage();
     const imageRef = ref(storage, image);
 
@@ -16,6 +18,38 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
     const [openMenu, setOpenMenu] = useState(false)
     const [showFullText, setShowFullText] = useState(false)
     const [imageUrl, setImageUrl] = useState(null)
+
+    const currentUserId = auth.currentUser.uid
+    const [currentUsersSubs] = useDocument(db.collection('subscriptions').doc(currentUserId))
+
+    const [fav, setFav] =  useState(false)
+
+    const addToFavorites = () =>{
+        const favPostId = postId
+        const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
+        if (currentUsersSubs){
+            updateDoc(usersSubsRef,{
+                'favorites' : arrayUnion(favPostId)
+            })
+        }
+        else{
+            setDoc(currentUsersSubs, {
+                'favorites' : [favPostId],
+                'userId' : currentUserId,
+            }, {merge: true})
+                .then(alert('post added'))
+        }
+        setFav(true)
+    }
+
+
+    useEffect(()=>{
+        if (currentUsersSubs && currentUsersSubs.data().favorites.includes(postId)) {
+            setFav(!fav)
+        }
+    }, [currentUsersSubs])
+
+
     getDownloadURL(imageRef)
         .then((url) => {
             setImageUrl(url)
@@ -49,7 +83,7 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
                 </div>
                 <div className={s.main}>
                     {imageUrl && <img src={imageUrl} alt={'pic'} className={s.imageInPost}/>}
-                    <p className={s.text} numberOfLines={2}>{text}</p>
+                    <p className={s.text}>{text}</p>
                     {showFullText && <span className={s.more}>...more</span>}
                 </div>
                 <span className={s.menu} onClick={()=>{setOpenMenu(!openMenu)}}>•••</span>
@@ -61,11 +95,12 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
                         <FontAwesomeIcon icon={faUserXmark}/> Unfollow
                     </button>
                 </div>}
-                <button className={s.fav}>
-                    <FontAwesomeIcon icon={faStar} />
+                <button className={s.fav} onClick={addToFavorites}
+                        style={{color: fav ? '#84B6A3' : '#BABABA' }}>
+                     <FontAwesomeIcon icon={fav ? fullStar : faStar} />
                 </button>
             </div>
-    </>
+        </>
     );
 }
 
