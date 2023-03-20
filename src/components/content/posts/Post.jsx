@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {getStorage, ref, getDownloadURL} from "firebase/storage";
 import s from "./post.module.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faStar} from "@fortawesome/free-regular-svg-icons";
+import {faStar, faEyeSlash} from "@fortawesome/free-regular-svg-icons";
+import {faUserXmark, faX} from "@fortawesome/free-solid-svg-icons";
 import {getPostTime, profilePhoto} from "../../../utils/constants";
 
 
@@ -12,7 +13,8 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
 
     if (!userPicUrl) userPicUrl = profilePhoto
 
-    const [showFullText, setShowFullText] = useState(true)
+    const [openMenu, setOpenMenu] = useState(false)
+    const [showFullText, setShowFullText] = useState(false)
     const [imageUrl, setImageUrl] = useState(null)
     getDownloadURL(imageRef)
         .then((url) => {
@@ -48,17 +50,17 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl}) {
                 <div className={s.main}>
                     {imageUrl && <img src={imageUrl} alt={'pic'} className={s.imageInPost}/>}
                     <p className={s.text} numberOfLines={2}>{text}</p>
-                    <span className={s.more}>...more</span>
+                    {showFullText && <span className={s.more}>...more</span>}
                 </div>
-                <span className={s.menu}>•••</span>
-                {/*<div className={s.settings}>*/}
-                {/*    <button>*/}
-                {/*        Hide from feed*/}
-                {/*    </button>*/}
-                {/*    <button>*/}
-                {/*        Unfollow*/}
-                {/*    </button>*/}
-                {/*</div>*/}
+                <span className={s.menu} onClick={()=>{setOpenMenu(!openMenu)}}>•••</span>
+                { openMenu && <div className={s.settings}>
+                    <button>
+                        <FontAwesomeIcon icon={faEyeSlash}/> Hide from feed
+                    </button>
+                    <button>
+                        <FontAwesomeIcon icon={faUserXmark}/> Unfollow
+                    </button>
+                </div>}
                 <button className={s.fav}>
                     <FontAwesomeIcon icon={faStar} />
                 </button>
