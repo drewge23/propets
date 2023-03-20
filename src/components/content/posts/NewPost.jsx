@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import DragDrop from "../../utils/DragDrop";
-import {db} from "../../firebaseConfig";
+import DragDrop from "../../../utils/DragDrop";
+import {db} from "../../../firebaseConfig";
 import {useSelector} from "react-redux";
 import {getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
@@ -18,6 +18,7 @@ function NewPost(props) {
             alert('Please login')
             return
         }
+
         uploadBytes(postImageRef, file)
             .then((snapshot) => {
                 db.collection('posts').add({

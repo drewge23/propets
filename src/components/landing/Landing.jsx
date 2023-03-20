@@ -1,5 +1,5 @@
 import React from 'react';
-import {logo,logoBig,puppy,allPets, lensPawBig} from "../../utils/constants";
+import {logo,puppy,allPets, lensPawBig} from "../../utils/constants";
 import {Link} from "react-router-dom";
 import s from "./landing.module.css"
 import FooterLanding from "./FooterLanding";
