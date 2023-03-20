@@ -17,7 +17,7 @@ function Activities(props) {
             <h2>Activities</h2>
             {activities && activities.docs.map(post => (
                 <div key={post.id}>
-                    {post.createdAt?.seconds}
+                    <h3>{post.createdAt?.seconds} Wow!!</h3>
                     <LostFoundPost post={post.data()}
                                    postId={post.id}
                                    editable

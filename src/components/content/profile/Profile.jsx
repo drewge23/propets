@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from '../profile/profile.module.css'
 import {profileAv} from "../../../utils/constants";
 import {useFormik} from "formik";
@@ -12,12 +12,20 @@ import {EmailAuthProvider} from "@firebase/auth";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
 import Activities from "./Activities";
+import {useLocation} from "react-router";
 
 const EMAIL_REGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 const PHONE_REGEXP = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/
 
 function Profile(props) {
+    const location = useLocation()
+
     const [profile, setProfile] = useState(true)
+    useEffect(() => {
+        if (!location) return
+        if (!location.state) return
+        setProfile(!location.state.activities)
+    }, [location])
     const [changeName, setChangeName] = useState(false)
 
     const [user] = useAuthState(auth)
