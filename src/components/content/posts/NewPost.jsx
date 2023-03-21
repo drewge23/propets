@@ -4,6 +4,7 @@ import {db} from "../../../firebaseConfig";
 import {useSelector} from "react-redux";
 import {getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
+import {useNavigate} from "react-router";
 
 function NewPost(props) {
     const [file, setFile] = useState(null)
@@ -13,6 +14,7 @@ function NewPost(props) {
     const storage = getStorage();
     const postImageRef = ref(storage, `posts/image_${nanoid()}`);
 
+    const navigate = useNavigate()
     const createNewPost = () => {
         if (!user) {
             alert('Please login')
@@ -31,7 +33,10 @@ function NewPost(props) {
                     userPicUrl: user.photoUrl,
                 })
             })
-            .then(() => alert('Post created!'))
+            .then(() => {
+                alert('Post created!')
+                navigate('/content/home')
+            })
             .catch((e) => alert(e.message()))
     }
 
