@@ -96,10 +96,13 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                         <FontAwesomeIcon icon={faUserXmark}/> Unfollow
                     </button>
                 </div>}
-                <button className={s.fav} onClick={updateFavorites}
-                        style={{color: fav ? '#84B6A3' : '#BABABA' }}>
-                     <FontAwesomeIcon icon={fav ? fullStar : faStar} />
-                </button>
+                <div className={s.favField}>
+                    <button className={s.fav} onClick={updateFavorites}
+                            style={{color: fav ? '#84B6A3' : '#BABABA' }}>
+                        <FontAwesomeIcon icon={fav ? fullStar : faStar} />
+                    </button>
+                </div>
+
             </div>
         </>
     );

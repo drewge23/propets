@@ -10,7 +10,7 @@
     row-gap: 5px;
     grid-template-areas:
     "avatar name menu"
-    ". main fav";
+    ". main favField";
 }
 
 .avatar{
@@ -83,16 +83,19 @@
     cursor: pointer;
 }
 
+.favField{
+    grid-area: favField;
+    position: relative;
+}
+
 .fav{
-    grid-area: fav;
     background-color: transparent;
     width: 20px;
     height: 20px;
     font-size: 18px;
-    /*color: var(--gray);*/
-    text-align: right;
-    margin-left: 30px;
-    margin-top: 30px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .fav:hover{
@@ -108,6 +111,7 @@
 
 .post .settings{
     position: absolute;
+    z-index: 100;
     left: 74%;
     top: 35px
 }
