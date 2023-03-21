@@ -24,7 +24,9 @@ function Activities(props) {
     return (
         <div>
             <h2>Activities</h2>
-            {activities && activities.docs.map(post => {
+            {activities && activities.docs
+                .sort((a, b) => b.data().createdAt.seconds - a.data().createdAt.seconds)
+                .map(post => {
                 const createdAtMs = post.data().createdAt.seconds * 1000
                 const deactivationDate = deactivationCheck(createdAtMs)
                 return (
