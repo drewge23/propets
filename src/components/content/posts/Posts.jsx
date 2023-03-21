@@ -6,7 +6,7 @@ function Posts({posts, title, type}) {
         <div>
             <h2>{title}</h2>
             {posts && posts.docs
-                // .filter(post => post.data().type === 'home')
+                .sort((a, b) => b.data().createdAt.seconds - a.data().createdAt.seconds)
                 .map(post => (
                         <Post {...post.data()} key={post.id}/>
                     )
