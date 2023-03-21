@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {useFormik} from "formik";
 import s from './lostFoundForm.module.css'
 import Input from "../../../Input";
@@ -9,7 +9,7 @@ import DragDrop from "../../../../utils/DragDrop";
 import LostFoundFormDnD from "./LostFoundFormDnD";
 
 import LOST_FOUND from '../../../../images/lostFound.png'
-import {db} from "../../../../firebaseConfig";
+import {auth, db} from "../../../../firebaseConfig";
 import {getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
 import {useSelector} from "react-redux";
@@ -41,40 +41,65 @@ function LostFoundForm() {
     const storage = getStorage()
     const lostFoundImageRef = ref(storage, `lost_and_found/image_${nanoid()}`);
 
+    const navigate = useNavigate()
+
     const formik = useFormik({
-            initialValues: {
-                breed: "",
-                color: "",
-                description: "",
-                distinctive_features: "",
-                email: user.email || '',
-                facebook: user.facebook || '',
-                height: "",
-                location: "",
-                phone: user.phone || '',
-                sex: "",
-            },
-            onSubmit: (values) => {
+        initialValues: location.state.postInfo || {
+            breed: "",
+            color: "",
+            description: "",
+            distinctive_features: "",
+            email: user.email || '',
+            facebook: user.facebook || '',
+            height: "",
+            location: "",
+            phone: user.phone || '',
+            sex: "",
+            userId: auth.currentUser.uid,
+        },
+        onSubmit: (values) => {
+            if (location.state.postId) {
+                    uploadBytes(lostFoundImageRef, image)
+                        .then((snapshot) => {
+                            db.collection('lost_and_found')
+                                .doc(location.state.postId).set({
+                                ...values,
+                                status: location.state.isLost ? 'lost' : 'found',
+                                image: image ? snapshot.metadata.fullPath : location.state.postInfo.image,
+                                createdAt: new Date(),
+                            })
+                                .then(() => alert('Post updated!'))
+                        })
+            } else {
                 uploadBytes(lostFoundImageRef, image)
                     .then((snapshot) => {
                         db.collection('lost_and_found').add({
                             ...values,
                             status: location.state.isLost ? 'lost' : 'found',
-                            image: snapshot.metadata.fullPath
+                            image: snapshot.metadata.fullPath,
+                            createdAt: new Date(),
                         })
+                            .then(() => alert('Post created!'))
                         console.log({...values, image: snapshot.metadata.fullPath})
                     })
-            },
-            validate: (values) => {
-                const errors = {};
-
-                return errors;
-            },
-            validateOnBlur: false,
-            validateOnChange: false,
-            validateOnMount: false,
+            }
+            formik.resetForm()
+            setImage(null)
+            navigate('/content/profile', {state: {activities: true}})
         }
-    )
+
+        ,
+        validate: (values) => {
+            const errors = {};
+
+            return errors;
+        },
+        validateOnBlur: false,
+        validateOnChange: false,
+        validateOnMount: false,
+}
+
+)
 
     return (
         <>

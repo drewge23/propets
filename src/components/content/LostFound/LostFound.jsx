@@ -18,7 +18,9 @@ function LostFound(props) {
     return (
         <div>
             <h2>Lost and Found</h2>
-            {posts && posts.docs.map(post => <LostFoundPost {...post.data()} key={post.id}/>)}
+            {posts && posts.docs.map(post => <LostFoundPost post={post.data()}
+                                                            postId={post.id}
+                                                            key={post.id}/>)}
         </div>
     );
 }
