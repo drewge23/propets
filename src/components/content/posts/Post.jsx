@@ -6,7 +6,7 @@ import {faStar, faEyeSlash} from "@fortawesome/free-regular-svg-icons";
 import {faUserXmark, faStar as fullStar} from "@fortawesome/free-solid-svg-icons";
 import {getPostTime, profilePhoto} from "../../../utils/constants";
 import {auth, db} from "../../../firebaseConfig";
-import {setDoc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
+import {collection, doc, setDoc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
 import {useDocument} from "react-firebase-hooks/firestore";
 
 function Post({createdAt, image, text, type, userId, userName, userPicUrl, postId}) {
@@ -22,13 +22,16 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
     const currentUserId = auth.currentUser.uid
     const [currentUsersSubs] = useDocument(db.collection('subscriptions').doc(currentUserId))
 
-    const fav = currentUsersSubs && currentUsersSubs.data().favorites.includes(postId)
+    const fav = currentUsersSubs && currentUsersSubs.data()?.favorites.includes(postId)
 
     const updateFavorites = () =>{
+        console.log(postId)
         const favPostId = postId
         const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
+        const subsRef = collection(db, 'subscriptions')
 
-        if (currentUsersSubs){
+        console.log(currentUsersSubs)
+        if (currentUsersSubs.exists()){
             if (fav){
                 updateDoc(usersSubsRef,{
                     'favorites' : arrayRemove(favPostId)
@@ -41,11 +44,15 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
             }
         }
         else{
-            setDoc(currentUsersSubs, {
+            console.log({
+                'favorites': [favPostId],
+                'userId': currentUserId,
+            })
+            setDoc(doc(subsRef,currentUserId), {
                 'favorites' : [favPostId],
                 'userId' : currentUserId,
             }, {merge: true})
-                .then(alert('post added'))
+                .then(() => alert('Post added'))
         }
     }
 

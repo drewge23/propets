@@ -6,15 +6,21 @@ import {auth, db} from "../../../firebaseConfig";
 function Favorites(props) {
 
     const currentUserId = auth.currentUser.uid
-    const [favPostIds] = useCollection(db.collection('subscriptions').where('userId', '==', currentUserId))
+    const [subsPostIds] = useCollection(db.collection('subscriptions').where('userId', '==', currentUserId))
     const [posts] = useCollection(db.collection('posts'))
     const [favPosts, setFavPosts] = useState(null)
+    const [favPostIds, setFavPostIds] = useState(null)
+
+    useEffect(()=>{
+        if (subsPostIds){
+            setFavPostIds(subsPostIds.docs[0].data().favorites)
+        }
+    }, [subsPostIds])
 
     useEffect(()=> {
         if (posts && favPostIds) {
             const temp = {docs: null}
-            temp.docs = posts.docs.filter(doc => favPostIds.docs[0].data().favorites.includes(doc.id))
-            console.log(temp.docs)
+            temp.docs = posts.docs.filter(doc => favPostIds.includes(doc.id))
             setFavPosts(temp)
         }
     },[posts, favPostIds])
@@ -30,11 +36,13 @@ function Favorites(props) {
 
     return (
         <div>
-            {favPosts && console.log(favPosts.docs)}
+            {/*{favPosts && console.log(favPosts.docs)}*/}
             {
-                !loading
-                    ? <Posts title={''} posts={favPosts}/>
-                    : <p>Loading...</p>
+                loading
+                    ? <p>Loading...</p>
+                    : favPostIds.length !== 0
+                        ? <Posts title={''} posts={favPosts}/>
+                        : <p> No favorites!</p>
             }
         </div>
     )
