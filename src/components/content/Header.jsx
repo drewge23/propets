@@ -19,7 +19,8 @@ function Header(props) {
                     <img src={logo} alt=""/>
 
                     <div>
-                        {!(lastParam === 'lost' || lastParam === 'found' || lastParam === 'profile')
+                        {!(lastParam === 'lost' || lastParam === 'found' ||
+                                lastParam === 'profile' || lastParam === 'lost&foundform')
                             && <Link to={'./newpost'}>
                                 <span style={{backgroundColor: 'lightblue', padding: 10}}>New post</span>
                             </Link>}
