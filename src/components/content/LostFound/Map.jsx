@@ -7,12 +7,11 @@ function Map() {
     const {isLoaded} = useLoadScript({
         googleMapsApiKey : process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
     })
-    const center = useMemo(() => ({ lat: 32.087237865296956, lng: 34.79195762787939}), [])
+    const center = useMemo(() => ({ lat: 32.072162620371934, lng: 34.78794113915044}), [])
 
 
     if (!isLoaded)
         return <div>Loading...</div>
-
     return (
         <div style={{ height: '100vh', width: '100%' }}>
             <GoogleMap
