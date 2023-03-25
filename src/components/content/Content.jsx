@@ -6,9 +6,16 @@ import React from "react";
 import s from './content.module.css'
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../firebaseConfig";
+import {useLocation} from "react-router";
+import Map from "./LostFound/Map";
 
 function Content() {
     const [user] = useAuthState(auth)
+    const location = useLocation()
+    const lastParam = function () {
+        let tempArr = location.pathname.split('/')
+        return tempArr[tempArr.length - 1]
+    }()
 
     return (
         <>
@@ -22,10 +29,16 @@ function Content() {
                         <div className={s.outlet}>
                             <Outlet/>
                         </div>
-                        <div className={s.ads}>
-                            <Ads/>
+                        {!(lastParam === 'lost' || lastParam === 'found')
+                            &&  <div className={s.ads}>
+                                    <Ads/>
+                                </div>}
+                        {(lastParam === 'lost' || lastParam === 'found')
+                            && <div className={s.ads}>
+                                <Map/>
+                        </div>}
+
                         </div>
-                    </div>
                 </div>
             </div>}
             {!user && <Navigate to={'/login'}/>}
