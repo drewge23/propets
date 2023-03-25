@@ -48,3 +48,21 @@
 .ads {
     padding: 34px;
 }
+
+.buttons{
+    padding-right: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.newPost {
+    border: 0px solid var(--light-green);
+    border-radius: 50px;
+    padding: 8px 20px;
+    color: var(--white);
+    background-color: var(--green);
+    font-size: 14px;
+}
+
