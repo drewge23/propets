@@ -6,26 +6,33 @@ import React from "react";
 import s from './content.module.css'
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../firebaseConfig";
+import {useLocation} from "react-router";
 
 function Content() {
     const [user] = useAuthState(auth)
+    const location = useLocation()
+    const lastParam = function () {
+        let tempArr = location.pathname.split('/')
+        return tempArr[tempArr.length - 1]
+    }()
 
     return (
         <>
             {user && <div className={s.content}>
                 <Header/>
                 <div className={`${s.mainBg}`}>
-                    <div className={`${s.main}`}>
+                    <div className={ !(lastParam === 'lost' || lastParam === 'found') ? `${s.main}` : `${s.mainLost}`}>
                         <div className={s.sidenav}>
                             <SideNav/>
                         </div>
                         <div className={s.outlet}>
                             <Outlet/>
                         </div>
-                        <div className={s.ads}>
-                            <Ads/>
+                        {!(lastParam === 'lost' || lastParam === 'found')
+                            &&  <div className={s.ads}>
+                                    <Ads/>
+                                </div>}
                         </div>
-                    </div>
                 </div>
             </div>}
             {!user && <Navigate to={'/login'}/>}
