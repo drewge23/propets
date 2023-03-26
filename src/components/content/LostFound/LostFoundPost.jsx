@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {getDownloadURL, getStorage, ref} from "firebase/storage";
 import {Link} from "react-router-dom";
+import {useDocumentData} from "react-firebase-hooks/firestore";
+import {db} from "../../../firebaseConfig";
 
 function LostFoundPost({post, postId, editable, deleteActivity}) {
     const storage = getStorage();
@@ -33,8 +35,17 @@ function LostFoundPost({post, postId, editable, deleteActivity}) {
             });
     }, [storage, imageRef])
 
+    const [userInfo, setUserInfo] = useState(null)
+    db.collection('users').doc(post.userId).get()
+        .then(doc => setUserInfo({
+            photoUrl: doc.data().photoUrl,
+            displayName: doc.data().displayName,
+        }))
+    // const [userInfo] = useDocumentData(db.collection('users').doc(post.userId))
+
     return (
         <div style={{marginBottom: '2rem'}}>
+            <p>{post.createdAt?.seconds * 1000}</p>
             <p>{post.breed}</p>
             <p>{post.color}</p>
             <p>{post.description}</p>
@@ -46,16 +57,22 @@ function LostFoundPost({post, postId, editable, deleteActivity}) {
             <p>{post.phone}</p>
             <p>{post.sex}</p>
             <p>{post.status}</p>
-            <p>{post.userId}</p>
+            <img src={userInfo?.photoUrl} alt=''
+                 style={{
+                     width: '50px',
+                     height: '50px',
+                     borderRadius: '50%',
+                 }}/>
+            <p>{userInfo?.displayName}</p>
             {imageUrl && <img src={imageUrl} alt=""/>}
 
             {editable && <div>
                 <Link to={'/content/lost&foundform'}
-                    state={{
-                        isLost: post.status === 'lost',
-                        postInfo: post,
-                        postId,
-                    }}
+                      state={{
+                          isLost: post.status === 'lost',
+                          postInfo: post,
+                          postId,
+                      }}
                 >
                     <button>Edit</button>
                 </Link>
