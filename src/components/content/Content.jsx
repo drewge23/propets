@@ -7,7 +7,6 @@ import s from './content.module.css'
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../firebaseConfig";
 import {useLocation} from "react-router";
-import Map from "./LostFound/Map";
 
 function Content() {
     const [user] = useAuthState(auth)
@@ -22,7 +21,7 @@ function Content() {
             {user && <div className={s.content}>
                 <Header/>
                 <div className={`${s.mainBg}`}>
-                    <div className={`${s.main}`}>
+                    <div className={ !(lastParam === 'lost' || lastParam === 'found') ? `${s.main}` : `${s.mainLost}`}>
                         <div className={s.sidenav}>
                             <SideNav/>
                         </div>
@@ -33,11 +32,6 @@ function Content() {
                             &&  <div className={s.ads}>
                                     <Ads/>
                                 </div>}
-                        {(lastParam === 'lost' || lastParam === 'found')
-                            && <div className={s.ads}>
-                                <Map/>
-                        </div>}
-
                         </div>
                 </div>
             </div>}

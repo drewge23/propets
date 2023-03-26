@@ -37,14 +37,17 @@
     display: grid;
     grid-template-columns: 22.5% 50% 27.5%;
 }
+
 .sidenav {
     padding: 34px 10px 10px 0;
 }
+
 .outlet {
     background-color: var(--white);
     min-height: 90vh;
     padding: 34px;
 }
+
 .ads {
     padding: 34px;
 }
@@ -66,8 +69,7 @@
     font-size: 14px;
 }
 
-.mapContainer{
-    width: 100%;
-    height: 70vh;
+.mainLost{
+    display: grid;
+    grid-template-columns: 22.5% auto;
 }
-
