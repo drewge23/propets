@@ -7,7 +7,7 @@ import {faUserXmark, faStar as fullStar} from "@fortawesome/free-solid-svg-icons
 import {getPostTime, profilePhoto} from "../../../utils/constants";
 import {auth, db} from "../../../firebaseConfig";
 import {collection, doc, setDoc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
-import {useDocument} from "react-firebase-hooks/firestore";
+import {useDocument, useDocumentData} from "react-firebase-hooks/firestore";
 
 function Post({createdAt, image, text, type, userId, userName, userPicUrl, postId}) {
     const storage = getStorage();
@@ -24,39 +24,37 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
 
     const fav = currentUsersSubs && currentUsersSubs.data()?.favorites.includes(postId)
 
-    const updateFavorites = () =>{
+    const [userInfo] = useDocumentData(db.collection('users').doc(userId))
+
+    const updateFavorites = () => {
         console.log(postId)
         const favPostId = postId
         const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
         const subsRef = collection(db, 'subscriptions')
 
         console.log(currentUsersSubs)
-        if (currentUsersSubs.exists()){
-            if (fav){
-                updateDoc(usersSubsRef,{
-                    'favorites' : arrayRemove(favPostId)
+        if (currentUsersSubs.exists()) {
+            if (fav) {
+                updateDoc(usersSubsRef, {
+                    'favorites': arrayRemove(favPostId)
+                })
+            } else {
+                updateDoc(usersSubsRef, {
+                    'favorites': arrayUnion(favPostId)
                 })
             }
-            else{
-                updateDoc(usersSubsRef,{
-                    'favorites' : arrayUnion(favPostId)
-                })
-            }
-        }
-        else{
+        } else {
             console.log({
                 'favorites': [favPostId],
                 'userId': currentUserId,
             })
-            setDoc(doc(subsRef,currentUserId), {
-                'favorites' : [favPostId],
-                'userId' : currentUserId,
+            setDoc(doc(subsRef, currentUserId), {
+                'favorites': [favPostId],
+                'userId': currentUserId,
             }, {merge: true})
                 .then(() => alert('Post added'))
         }
     }
-
-
 
     getDownloadURL(imageRef)
         .then((url) => {
@@ -84,18 +82,24 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
     return (
         <>
             <div className={s.post} key={postId}>
-                <img src={userPicUrl} alt={'avatar'} className={s.avatar}/>
-                <div className={s.name}>
-                    <h3>{userName}</h3>
-                    <span className={s.time}>{getPostTime(createdAt)}</span>
-                </div>
+                {userInfo &&
+                    <>
+                        <img src={userInfo?.photoUrl || userPicUrl} alt={'avatar'} className={s.avatar}/>
+                        <div className={s.name}>
+                            <h3>{userInfo?.displayName || userName}</h3>
+                            <span className={s.time}>{getPostTime(createdAt)}</span>
+                        </div>
+                    </>
+                }
                 <div className={s.main}>
                     {imageUrl && <img src={imageUrl} alt={'pic'} className={s.imageInPost}/>}
                     <p className={s.text}>{text}</p>
                     {showFullText && <span className={s.more}>...more</span>}
                 </div>
-                <span className={s.menu} onClick={()=>{setOpenMenu(!openMenu)}}>•••</span>
-                { openMenu && <div className={s.settings}>
+                <span className={s.menu} onClick={() => {
+                    setOpenMenu(!openMenu)
+                }}>•••</span>
+                {openMenu && <div className={s.settings}>
                     <button>
                         <FontAwesomeIcon icon={faEyeSlash}/> Hide from feed
                     </button>
@@ -105,8 +109,8 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                 </div>}
                 <div className={s.favField}>
                     <button className={s.fav} onClick={updateFavorites}
-                            style={{color: fav ? '#84B6A3' : '#BABABA' }}>
-                        <FontAwesomeIcon icon={fav ? fullStar : faStar} />
+                            style={{color: fav ? '#84B6A3' : '#BABABA'}}>
+                        <FontAwesomeIcon icon={fav ? fullStar : faStar}/>
                     </button>
                 </div>
 

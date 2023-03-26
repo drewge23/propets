@@ -11,62 +11,21 @@ import Fostering from "./components/content/posts/Fostering";
 import VetHelp from "./components/content/posts/VetHelp";
 import Favorites from "./components/content/posts/Favorites";
 import Profile from "./components/content/profile/Profile";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import NewPost from "./components/content/posts/NewPost";
 import {useAuthState} from "react-firebase-hooks/auth";
-import {auth} from "./firebaseConfig";
+import {auth, db} from "./firebaseConfig";
 import {useDispatch} from "react-redux";
-import {setUser} from "./BLL/userSlice";
+import {getUserThunk, setUser} from "./BLL/userSlice";
 import LostFound from "./components/content/LostFound/LostFound";
-
-// const routes = [
-//     {
-//         path: 'home',
-//         type: 'home',
-//         title: ''
-//     },
-//     {
-//         path: 'hotels',
-//         type: 'hotels',
-//         title: 'Hotels. Go to vacations — we’ll take care of your pet!'
-//     },
-//     {
-//         path: 'walking',
-//         type: 'walking',
-//         title: 'Walking. No time tonight? We have a solution!'
-//     },
-//     {
-//         path: 'fostering',
-//         type: 'fostering',
-//         title: 'Fostering. In adoption we trust.'
-//     },
-//     {
-//         path: 'vethelp',
-//         type: 'vethelp',
-//         title: 'VetHelp. They deserve it.'
-//     },
-//     {
-//         path: 'favorites',
-//         type: 'favorites',
-//         title: 'Your favorites. Find them here anytime.'
-//     },
-// ]
 
 function App() {
     const [user] = useAuthState(auth)
-    console.log(user)
     const dispatch = useDispatch()
 
     useEffect(() => {
         if (!user) return
-        dispatch(setUser({
-            userId: user.uid,
-            photoUrl: user.photoURL,
-            displayName: user.displayName,
-            email: user.email,
-            facebook: null,
-            phone: user.phoneNumber,
-        }))
+        dispatch(getUserThunk(user.uid))
     }, [user])
 
     return (

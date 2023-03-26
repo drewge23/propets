@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {db} from "../firebaseConfig";
 
 const userSlice = createSlice({
     name: 'user',
@@ -19,6 +20,16 @@ const userSlice = createSlice({
         updatePhone: (state, action) => ({...state, phone: action.payload}),
     }
 })
+
+export const getUserThunk = (userId) => (dispatch) => {
+    db.collection('users').doc(userId).get()
+        .then(doc => {
+            console.log(userId)
+            console.log(doc.exists)
+            console.log(doc.data())
+            dispatch(setUser({...doc.data()}))
+        })
+}
 
 export default userSlice.reducer
 export const {setUser, updatePhoto, updateName, updateEmail, updateFacebook, updatePhone} = userSlice.actions

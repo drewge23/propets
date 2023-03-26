@@ -1,7 +1,7 @@
 import {useFormik} from "formik";
 import React from "react";
 import s from './login.module.css'
-import {auth} from "../../firebaseConfig";
+import {auth, db} from "../../firebaseConfig";
 import {setUser} from "../../BLL/userSlice";
 import {useDispatch} from "react-redux";
 
@@ -18,21 +18,26 @@ function SignUpForm(props) {
                     password: '',
                     repeat_password: '',
                 },
-                onSubmit: (values, {resetForm}) => {
+                onSubmit: (values) => {
                     auth.createUserWithEmailAndPassword(values.email, values.password)
                         .then((userCredential) => {
                             auth.currentUser.updateProfile({
                                 displayName: values.name,
-                            }).then(() => {
-                                dispatch(setUser({
-                                    displayName: userCredential.user.displayName,
-                                    photoUrl: userCredential.user.photoURL,
-                                    userId: userCredential.user.uid,
-                                    email: userCredential.user.email,
-                                    facebook: null,
-                                    phone: null,
-                                }))
                             })
+                            db.collection('users').doc(userCredential.user.uid).set({
+                                displayName: values.name,
+                                photoUrl: userCredential.user.photoURL,
+                                userId: userCredential.user.uid,
+                                email: userCredential.user.email,
+                                facebook: null,
+                                phone: null,
+                            })
+                                .then(response => {
+                                    db.collection('users').doc(response.id).get()
+                                        .then(response => {
+                                            dispatch(setUser({...response.data()}))
+                                        })
+                                })
                         })
                         .catch((error) => {
                             console.log(error.code);
