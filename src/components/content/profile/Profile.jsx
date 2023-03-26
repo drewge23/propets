@@ -6,13 +6,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCamera, faPencil, faFloppyDisk as save} from '@fortawesome/free-solid-svg-icons'
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, db} from "../../../firebaseConfig";
-import {setUser, updateName, updatePhoto} from "../../../BLL/userSlice";
-import {useDispatch} from "react-redux";
+import {setUser, updateEmail, updateFacebook, updateName, updatePhone, updatePhoto} from "../../../BLL/userSlice";
+import {useDispatch, useSelector} from "react-redux";
 import {EmailAuthProvider} from "@firebase/auth";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
 import Activities from "./Activities";
 import {useLocation} from "react-router";
+import {useDocument} from "react-firebase-hooks/firestore";
 
 const EMAIL_REGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 const PHONE_REGEXP = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/
@@ -28,7 +29,8 @@ function Profile(props) {
     }, [location])
     const [changeName, setChangeName] = useState(false)
 
-    const [user] = useAuthState(auth)
+    const user = useSelector(state => state.user)
+    const userId = useSelector(state => state.user.userId)
     const dispatch = useDispatch()
 
     const [photo, setPhoto] = useState(null)
@@ -40,8 +42,8 @@ function Profile(props) {
             .then((snapshot) => {
                 getDownloadURL(photoRef)
                     .then((url) => {
-                        auth.currentUser.updateProfile({
-                            photoURL: url,
+                        db.collection('users').doc(userId).update({
+                            photoUrl: url,
                         })
                             .then(() => dispatch(updatePhoto(url)))
                     })
@@ -71,22 +73,22 @@ function Profile(props) {
         initialValues: {
             name: user?.displayName || '',
             email: user?.email || '',
-            fb: '',
-            phone: user?.phoneNumber || '',
+            fb: user?.facebook || '',
+            phone: user?.phone || '',
         },
         onSubmit(values) {
-            // auth.currentUser.reauthenticateWithCredential(
-            //     EmailAuthProvider.credential(user.email, prompt('Enter your password please'))
-            // ).then(() => {
-            Promise.all([
-                auth.currentUser.updateProfile({
-                    displayName: values.name,
-                }),
-                // auth.currentUser.updateEmail(values.email),
-                // auth.currentUser.updatePhoneNumber(values.phone),
-            ])
+            db.collection('users').doc(userId).update({
+                displayName: values.name,
+                email: values.email,
+                phone: values.phone,
+                facebook: values.fb
+            })
                 .then(() => {
                     dispatch(updateName(values.name))
+                    dispatch(updateEmail(values.email))
+                    dispatch(updatePhone(values.phone))
+                    dispatch(updateFacebook(values.fb))
+                    alert('Profile updated!')
                 })
                 .catch((err) => {
                     console.log(err)
@@ -135,7 +137,7 @@ function Profile(props) {
                     {profile && <div className={s.main}>
                         <div className={s.mainInfo}>
                             <div className={s.avatar}>
-                                <img src={user.photoURL || profilePhoto} alt={'profile photo'}/>
+                                <img src={user?.photoUrl || profilePhoto} alt={'profile photo'}/>
                                 <label htmlFor="photo" className={s.camera}>
                                     <FontAwesomeIcon icon={faCamera}/>
                                     <input
@@ -208,7 +210,7 @@ function Profile(props) {
                             </p>
                         </div>
                     </div>}
-                    {!profile && <Activities />}
+                    {!profile && <Activities/>}
                 </div>
                 {profile && <div className={s.btns}>
                     <button className={s.btnCancel}>Cancel</button>

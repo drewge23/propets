@@ -1,7 +1,7 @@
 import {useFormik} from "formik";
 import React from "react";
 import s from './login.module.css'
-import {auth} from "../../firebaseConfig";
+import {auth, db} from "../../firebaseConfig";
 import {setUser} from "../../BLL/userSlice";
 import {useDispatch} from "react-redux";
 
@@ -18,14 +18,11 @@ function SignInForm(props) {
                 onSubmit: (values, {resetForm}) => {
                     auth.signInWithEmailAndPassword(values.email, values.password)
                         .then((userCredential) => {
-                                dispatch(setUser({
-                                    displayName: userCredential.user.displayName,
-                                    photoUrl: userCredential.user.photoURL,
-                                    userId: userCredential.user.uid,
-                                    email: userCredential.user.email,
-                                    facebook: null,
-                                    phone: null,
-                                }))})
+                            db.collection('users').doc(userCredential.user.uid).get()
+                                .then(response => {
+                                    dispatch(setUser({...response.data()}))
+                                })
+                        })
                         .catch((error) => {
                             console.log(error.code);
                             console.log(error.message);
