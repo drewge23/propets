@@ -8,7 +8,7 @@ import {faEnvelope, faMapMarker, faPencil, faPhone, faTrashAlt} from "@fortaweso
 import {copyToBuffer, getPostTime} from "../../../utils/constants";
 import {faFacebookSquare} from "@fortawesome/free-brands-svg-icons";
 
-function LostFoundPost({post, postId, editable, deleteActivity}) {
+function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
     const storage = getStorage();
     const imageRef = ref(storage, post.image);
 
@@ -47,7 +47,7 @@ function LostFoundPost({post, postId, editable, deleteActivity}) {
         }))
 
     return (
-        <div className={s.lostFoundPost}>
+        <div className={s.lostFoundPost} style={{opacity: deactivated ? 0.5 : 1}}>
             {imageUrl && <img src={imageUrl} alt=""/>}
             <div className={s.right}>
                 <div className={s.header}>
