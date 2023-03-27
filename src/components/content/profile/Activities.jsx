@@ -23,7 +23,7 @@ function Activities(props) {
 
     return (
         <div>
-            <h2>Activities</h2>
+            {!activities && <h3>You don't have any activities yet</h3>}
             {activities && activities.docs
                 .sort((a, b) => b.data().createdAt.seconds - a.data().createdAt.seconds)
                 .map(post => {
@@ -31,7 +31,6 @@ function Activities(props) {
                 const deactivationDate = deactivationCheck(createdAtMs)
                 return (
                     <div key={post.id}>
-                        <p>{new Date(createdAtMs).toString()}</p>
                         {deactivationDate
                             && <>
                                 <p>Post was deactivated on {deactivationDate.toString()}</p>
