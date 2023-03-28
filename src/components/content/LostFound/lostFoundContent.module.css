@@ -3,6 +3,7 @@
     flex-direction: row;
     justify-content: start;
     gap: 20px;
+    height: 45px;
 }
 
 .filters select{
@@ -42,14 +43,18 @@
 }
 
 .main{
-    display: grid;
-    grid-template-columns: 50% auto;
-    position: relative;
+    width: 63%;
+    height: 75vh;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
 }
 
 .map{
     max-width: 450px;
-    max-height: 550px;
+    max-height: 580px;
     width: 100%;
     height: 100%;
     border-left: 6px solid var(--light-green);

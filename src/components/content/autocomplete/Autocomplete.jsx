@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import usePlacesAutocomplete, {getGeocode,getLatLng} from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
+import s from './autocomplete.module.css'
 
 const Autocomplete = ({isLoaded, setCoords, setPlace}) => {
 
@@ -52,7 +53,7 @@ const Autocomplete = ({isLoaded, setCoords, setPlace}) => {
             } = suggestion;
 
             return (
-                <li key={place_id} onClick={handleSelect(suggestion)}>
+                <li key={place_id} onClick={handleSelect(suggestion)} className={s.line}>
                     <strong>{main_text}</strong> <small>{secondary_text}</small>
                 </li>
             );
@@ -60,14 +61,18 @@ const Autocomplete = ({isLoaded, setCoords, setPlace}) => {
 
 
     return (
-        <div ref={ref}>
-            <input type={'text'}
-                   value={value}
-                   onChange={handleInput}
-                   disabled={!ready}
-                   placeholder="Location"
-            />
-            {status === "OK" && <ul>{renderSuggestions()}</ul>}
+        <div ref={ref} className={s.container}>
+            <div className={s.main}>
+                <label>Location</label>
+                <input type={'text'}
+                       value={value}
+                       onChange={handleInput}
+                       disabled={!ready}
+                       placeholder="Location"
+                       className={s.autocomplete}
+                />
+            </div>
+            {status === "OK" && <ul className={s.list}>{renderSuggestions()}</ul>}
         </div>
     );
 };

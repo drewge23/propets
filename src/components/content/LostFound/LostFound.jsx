@@ -32,7 +32,6 @@ function LostFound(props) {
                 <input placeholder={'Breed'}/>
                 <input placeholder={'Distinctive features'}/>
                 <input placeholder={'Location'}/>
-                {/*<Autocomplete isLoaded={isLoaded}/>*/}
             </div>
             <div className={s.main}>
                 <div>
@@ -42,8 +41,8 @@ function LostFound(props) {
                                                                     postId={post.id}
                                                                     key={post.id}/>)}
                 </div>
-                <Map/>
             </div>
+            <Map/>
         </div>
     );
 }
