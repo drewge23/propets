@@ -14,9 +14,11 @@ import {getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
 import {useSelector} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faArrowUpFromBracket
-} from "@fortawesome/free-solid-svg-icons";
+import {faArrowUpFromBracket} from "@fortawesome/free-solid-svg-icons";
+import Autocomplete from "../../autocomplete/Autocomplete";
+import {useLoadScript} from "@react-google-maps/api";
+
+const libraries = ['places']
 
 function LostFoundForm() {
     const user = useSelector(state => state.user)
@@ -43,6 +45,14 @@ function LostFoundForm() {
 
     const navigate = useNavigate()
 
+    const {isLoaded} = useLoadScript({
+        googleMapsApiKey : process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        libraries
+    })
+
+    const [coords, setCoords] = useState({lat: null, lng: null})
+    const [place, setPlace] = useState("")
+
     const formik = useFormik({
         initialValues: location.state.postInfo || {
             type: "Dog",
@@ -53,7 +63,6 @@ function LostFoundForm() {
             email: user.email || '',
             facebook: user.facebook || '',
             height: "< 45 cm",
-            location: "",
             phone: user.phone || '',
             sex: "Male",
             userId: auth.currentUser.uid,
@@ -67,6 +76,8 @@ function LostFoundForm() {
                                 ...values,
                                 status: location.state.isLost ? 'lost' : 'found',
                                 image: image ? snapshot.metadata.fullPath : location.state.postInfo.image,
+                                coords: {lat: coords.lat, lng: coords.lng},
+                                location: place,
                                 createdAt: new Date(),
                             })
                                 .then(() => alert('Post updated!'))
@@ -78,6 +89,8 @@ function LostFoundForm() {
                             ...values,
                             status: location.state.isLost ? 'lost' : 'found',
                             image: snapshot.metadata.fullPath,
+                            coords: {lat: coords.lat, lng: coords.lng},
+                            location: place,
                             createdAt: new Date(),
                         })
                             .then(() => alert('Post created!'))
@@ -123,8 +136,10 @@ function LostFoundForm() {
                         <Textarea formik={formik} label={'description'}
                                   placeholder={'brown fox jumps over a lazy dog. DJs flock by when jhkjk jhgMTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs.'}
                                   upTo={150}/>
-                        <Textarea formik={formik} label={'location'}
-                                  placeholder={'Florentin Street, Tel Aviv'}/>
+                        <Autocomplete label={'location'}
+                                      isLoaded={isLoaded}
+                                      setCoords={setCoords }
+                                      setPlace={setPlace}/>
                     </div>
                     <div className={s.right}>
                         <img src={LOST_FOUND} alt=""/>
