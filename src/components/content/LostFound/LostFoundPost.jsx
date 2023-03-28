@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {getDownloadURL, getStorage, ref} from "firebase/storage";
 import {Link} from "react-router-dom";
-import {useDocumentData} from "react-firebase-hooks/firestore";
 import {db} from "../../../firebaseConfig";
+import s from './lostFoundPost.module.css'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEnvelope, faMapMarker, faPencil, faPhone, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {copyToBuffer, getPostTime} from "../../../utils/constants";
+import {faFacebookSquare} from "@fortawesome/free-brands-svg-icons";
 
-function LostFoundPost({post, postId, editable, deleteActivity}) {
+function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
     const storage = getStorage();
     const imageRef = ref(storage, post.image);
 
@@ -41,44 +45,76 @@ function LostFoundPost({post, postId, editable, deleteActivity}) {
             photoUrl: doc.data().photoUrl,
             displayName: doc.data().displayName,
         }))
-    // const [userInfo] = useDocumentData(db.collection('users').doc(post.userId))
 
     return (
-        <div style={{marginBottom: '2rem'}}>
-            <p>{post.createdAt?.seconds * 1000}</p>
-            <p>{post.breed}</p>
-            <p>{post.color}</p>
-            <p>{post.description}</p>
-            <p>{post.distinctive_features}</p>
-            <p>{post.email}</p>
-            <p>{post.facebook}</p>
-            <p>{post.height}</p>
-            <p>{post.location}</p>
-            <p>{post.phone}</p>
-            <p>{post.sex}</p>
-            <p>{post.status}</p>
-            <img src={userInfo?.photoUrl} alt=''
-                 style={{
-                     width: '50px',
-                     height: '50px',
-                     borderRadius: '50%',
-                 }}/>
-            <p>{userInfo?.displayName}</p>
+        <div className={s.lostFoundPost} style={{opacity: deactivated ? 0.5 : 1}}>
             {imageUrl && <img src={imageUrl} alt=""/>}
-
-            {editable && <div>
-                <Link to={'/content/lost&foundform'}
-                      state={{
-                          isLost: post.status === 'lost',
-                          postInfo: post,
-                          postId,
-                      }}
-                >
-                    <button>Edit</button>
-                </Link>
-                <p></p>
-                <button onClick={() => deleteActivity(postId)}>Delete</button>
-            </div>}
+            <div className={s.right}>
+                <div className={s.header}>
+                    <h3>{post.type + ', ' + post.breed}</h3>
+                    {editable && <div>
+                        <Link to={'/content/lost&foundform'}
+                              state={{
+                                  isLost: post.status === 'lost',
+                                  postInfo: post,
+                                  postId,
+                              }}
+                        >
+                            <button type={'button'}>
+                                <FontAwesomeIcon icon={faPencil}/>
+                            </button>
+                        </Link>
+                        <button onClick={() => deleteActivity(postId)} type={'button'}>
+                            <FontAwesomeIcon icon={faTrashAlt}/>
+                        </button>
+                    </div>}
+                </div>
+                <div className={s.features}>
+                    <div className={s.colorSexHeight}>
+                        <p><span className={s.label}>Color: </span><span className={s.text}>{post.color}</span></p>
+                        <p><span className={s.label}>Sex: </span><span className={s.text}>{post.sex}</span></p>
+                        <p><span className={s.label}>Height: </span><span className={s.text}>{post.height}</span></p>
+                    </div>
+                    <div>
+                        <p>
+                            <span className={s.label}>Distinctive features: </span>
+                            <span className={s.text}>{post.distinctive_features}</span>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <p><span className={s.label}>Description: </span><span className={s.text}>{post.description}</span>
+                    </p>
+                </div>
+                <div>
+                    <hr/>
+                    <p>
+                        <span className={s.label}><FontAwesomeIcon icon={faMapMarker}/></span>
+                        <span className={s.text}>{post.location}</span>
+                    </p>
+                </div>
+                <div className={s.userInfo}>
+                    <div className={s.avatarName}>
+                        <img src={userInfo?.photoUrl} alt=''/>
+                        <div>
+                            <p className={s.name}>{userInfo?.displayName}</p>
+                            <p className={s.date}>{getPostTime(post.createdAt)}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button onClick={() => copyToBuffer(post.phone)} type={'button'}>
+                            <FontAwesomeIcon icon={faPhone}/>
+                        </button>
+                        <button onClick={() => copyToBuffer(post.facebook)} type={'button'}>
+                            <FontAwesomeIcon icon={faFacebookSquare}/>
+                        </button>
+                        <button onClick={() => copyToBuffer(post.email)} type={'button'}>
+                            <FontAwesomeIcon icon={faEnvelope}/>
+                        </button>
+                    </div>
+                </div>
+                {/*<p>{post.status}</p>*/}
+            </div>
         </div>
     );
 }

@@ -35,9 +35,6 @@ function App() {
                 <Route path={'login'} element={<LoginPage/>}/>
                 <Route path={'content'} element={<Content/>}>
                     <Route index element={<Home/>}/>
-                    {/*{routes.map(route => (*/}
-                    {/*    <Route path={route.path} element={<Posts type={route.type} title={route.title}/>}/>*/}
-                    {/*))}*/}
                     <Route path={'hotels'} element={<Hotels/>}/>
                     <Route path={'walking'} element={<Walking/>}/>
                     <Route path={'fostering'} element={<Fostering/>}/>

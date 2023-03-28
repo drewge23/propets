@@ -1,0 +1,92 @@
+.lostFoundPost {
+    margin: 15px;
+    height: 280px;
+    padding: 15px;
+    display: flex;
+    gap: 25px;
+
+    text-align: left;
+    box-shadow: 0 3px 6px #00000029;
+}
+.lostFoundPost button {
+    background-color: transparent;
+    color: var(--gray);
+    margin-left: 10px;
+    font-size: 16px;
+}
+.lostFoundPost img {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.header {
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--light-green);
+}
+
+.header button {
+    margin-right: 10px;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.colorSexHeight {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--light-green);
+    margin-right: 5px;
+}
+
+.text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.avatarName {
+    height: 45px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.avatarName img {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+}
+.name {
+    font-size: 16px;
+    font-weight: 550;
+    color: var(--light-green);
+}
+.date {
+    font-size: 12px;
+    font-weight: 550;
+    color: var(--gray);
+}

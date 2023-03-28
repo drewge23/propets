@@ -45,16 +45,17 @@ function LostFoundForm() {
 
     const formik = useFormik({
         initialValues: location.state.postInfo || {
+            type: "Dog",
             breed: "",
             color: "",
             description: "",
             distinctive_features: "",
             email: user.email || '',
             facebook: user.facebook || '',
-            height: "",
+            height: "< 45 cm",
             location: "",
             phone: user.phone || '',
-            sex: "",
+            sex: "Male",
             userId: auth.currentUser.uid,
         },
         onSubmit: (values) => {

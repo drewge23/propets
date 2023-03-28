@@ -124,13 +124,13 @@ function Profile(props) {
     return (
         <>
             <h3>Your profile. Change, edit and manage your data.</h3>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit} name={'profile'} id={'profile'}>
                 <div className={s.window}>
                     <div className={s.header}>
-                        <button style={{backgroundColor: profile ? '#8DBFAC47' : '#8DBFACFF'}}
+                        <button style={{backgroundColor: profile ? '#8DBFAC47' : '#8DBFACFF'}} type={'button'}
                                 onClick={() => setProfile(true)}>My profile
                         </button>
-                        <button style={{backgroundColor: !profile ? '#8DBFAC47' : '#8DBFACFF'}}
+                        <button style={{backgroundColor: !profile ? '#8DBFAC47' : '#8DBFACFF'}} type={'button'}
                                 onClick={() => setProfile(false)}>Activities
                         </button>
                     </div>
@@ -164,7 +164,7 @@ function Profile(props) {
                                 />
                                 : <h3>{user?.displayName || ''}</h3>
                             }
-                            <button className={s.pencil} type={'submit'} onClick={() => setChangeName(!changeName)}>
+                            <button className={s.pencil} type={'button'} onClick={() => setChangeName(!changeName)}>
                                 <FontAwesomeIcon icon={faPencil}/>
                             </button>
                         </div>
@@ -213,8 +213,8 @@ function Profile(props) {
                     {!profile && <Activities/>}
                 </div>
                 {profile && <div className={s.btns}>
-                    <button className={s.btnCancel}>Cancel</button>
-                    <button className={s.btnSave} type={"submit"}>
+                    <button className={s.btnCancel} type={'button'}>Cancel</button>
+                    <button className={s.btnSave} type={"submit"} form={'profile'}>
                         <span className={s.saveIcon}><FontAwesomeIcon icon={save}/></span>
                         Save changes
                     </button>
