@@ -60,9 +60,13 @@ function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
                                   postId,
                               }}
                         >
-                            <button><FontAwesomeIcon icon={faPencil}/></button>
+                            <button type={'button'}>
+                                <FontAwesomeIcon icon={faPencil}/>
+                            </button>
                         </Link>
-                        <button onClick={() => deleteActivity(postId)}><FontAwesomeIcon icon={faTrashAlt}/></button>
+                        <button onClick={() => deleteActivity(postId)} type={'button'}>
+                            <FontAwesomeIcon icon={faTrashAlt}/>
+                        </button>
                     </div>}
                 </div>
                 <div className={s.features}>
@@ -98,13 +102,13 @@ function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
                         </div>
                     </div>
                     <div>
-                        <button onClick={() => copyToBuffer(post.phone)}>
+                        <button onClick={() => copyToBuffer(post.phone)} type={'button'}>
                             <FontAwesomeIcon icon={faPhone}/>
                         </button>
-                        <button onClick={() => copyToBuffer(post.facebook)}>
+                        <button onClick={() => copyToBuffer(post.facebook)} type={'button'}>
                             <FontAwesomeIcon icon={faFacebookSquare}/>
                         </button>
-                        <button onClick={() => copyToBuffer(post.email)}>
+                        <button onClick={() => copyToBuffer(post.email)} type={'button'}>
                             <FontAwesomeIcon icon={faEnvelope}/>
                         </button>
                     </div>

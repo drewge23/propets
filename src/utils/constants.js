@@ -13,8 +13,8 @@ export function getPostTime(createdAt) {
                                            //дата сегодня ( при вычитании считывается в миллисекундах)
     const currentDate = new Date(currentDateWithTime.getFullYear(), currentDateWithTime.getMonth(), currentDateWithTime.getDate())
     const currentYear = new Date(currentDateWithTime.getFullYear())
-    const postsTimeInSeconds = createdAt.toMillis() // дата и время создания поста в миллисекундах
-    const postDateArr = new Date(postsTimeInSeconds).toString().split(' ') // создания поста Thu Mar 16 2023 22:14:54 GMT+0200 (Израиль, стандартное время)
+    const postsTimeInMSeconds = createdAt.toMillis() // дата и время создания поста в миллисекундах
+    const postDateArr = new Date(postsTimeInMSeconds).toString().split(' ') // создания поста Thu Mar 16 2023 22:14:54 GMT+0200 (Израиль, стандартное время)
 
     const postDate = postDateArr[2] + ' ' + postDateArr[1]
     const postDateWithYear = postDateArr[2] + ' ' + postDateArr[1] + ' ' + postDateArr[3]
@@ -35,7 +35,7 @@ export function getPostTime(createdAt) {
     const today = currentTime - currentDate
     const thisYear = currentTime - currentYear
 
-    const differentTime = currentTime - postsTimeInSeconds
+    const differentTime = currentTime - postsTimeInMSeconds
 
     if (differentTime < minute) return 'now'
     else if (differentTime >= minute && differentTime < minute5) return '1 minute ago'
