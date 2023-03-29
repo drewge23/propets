@@ -65,3 +65,8 @@ textarea {
     resize: none;
     padding: 4px;
 }
+
+.shadow {
+    box-shadow: 0 3px 6px #00000029;
+    padding: 20px 0;
+}

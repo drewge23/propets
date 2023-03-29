@@ -1,0 +1,62 @@
+.newPost {
+    padding: 10px;
+}
+
+.title {
+    font-weight: 550;
+}
+
+.text {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 15% 85%;
+}
+
+.text textarea {
+    width: 90%;
+    height: 420px;
+    margin: 0 auto;
+}
+
+.text textarea::placeholder {
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--gray);
+}
+
+.labelContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.labelContainer span {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--light-green);
+}
+
+.photo {
+    margin: 20px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.publishButton {
+    border: 0 solid var(--light-green);
+    border-radius: 50px;
+    padding: 8px 20px;
+    color: var(--white);
+    background-color: var(--green);
+    font-size: 14px;
+    transition: 300ms;
+}
+
+.publishButton:hover {
+    cursor: pointer;
+    background-color: var(--dark-green);
+}
