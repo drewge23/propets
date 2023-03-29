@@ -23,6 +23,7 @@
   width: 100%;
   font-family: 'Montserrat', sans-serif;
   border: 1px solid var(--light-green);
+  margin-bottom: 0;
 }
 
 .list{
@@ -32,4 +33,14 @@
 .line{
   margin: 0;
   font-size: 0.9em;
+  border: 1px solid var(--green);
+}
+
+.list .line:before {
+  display: none;
+}
+
+.line:hover{
+  cursor: pointer;
+  background-color: var(--light-green);
 }
