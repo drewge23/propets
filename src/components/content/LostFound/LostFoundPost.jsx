@@ -5,7 +5,7 @@ import {db} from "../../../firebaseConfig";
 import s from './lostFoundPost.module.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faMapMarker, faPencil, faPhone, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-import {copyToBuffer, getPostTime} from "../../../utils/constants";
+import {copyToBuffer, getPostTime, USER_PICTURE_PLACEHOLDER} from "../../../utils/constants";
 import {faFacebookSquare} from "@fortawesome/free-brands-svg-icons";
 
 function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
@@ -51,7 +51,7 @@ function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
             {imageUrl && <img src={imageUrl} alt=""/>}
             <div className={s.right}>
                 <div className={s.header}>
-                    <h3>{post.type + ', ' + post.breed}</h3>
+                    <h3>{post.type + (post.breed ? ', ' + post.breed : '')}</h3>
                     {editable && <div>
                         <Link to={'/content/lost&foundform'}
                               state={{
@@ -95,7 +95,7 @@ function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
                 </div>
                 <div className={s.userInfo}>
                     <div className={s.avatarName}>
-                        <img src={userInfo?.photoUrl} alt=''/>
+                        <img src={userInfo?.photoUrl || USER_PICTURE_PLACEHOLDER} alt=''/>
                         <div>
                             <p className={s.name}>{userInfo?.displayName}</p>
                             <p className={s.date}>{getPostTime(post.createdAt)}</p>

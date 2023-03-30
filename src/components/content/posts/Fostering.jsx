@@ -8,7 +8,10 @@ function Fostering(props) {
     const [posts] = useCollection(db.collection('posts').where('type', '==', 'fostering'))
 
     return (
-        <Posts title={'Fostering'} posts={posts}/>
+        <>
+            <h3><b>Fostering.</b> In adoption we trust</h3>
+            <Posts posts={posts}/>
+        </>
     )
 }
 

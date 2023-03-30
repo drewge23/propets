@@ -5,6 +5,8 @@ import allPets from '../images/allPets2.png'
 import lensPawBig from '../images/lensPaw2.png'
 import profilePhoto from '../images/profile1.jpg'
 
+export {default as USER_PICTURE_PLACEHOLDER} from '../images/profile1.jpg';
+
 export {logo, logoBig, puppy, allPets, lensPawBig, profilePhoto}
 
 export function getPostTime(createdAt) {

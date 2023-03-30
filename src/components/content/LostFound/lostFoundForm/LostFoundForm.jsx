@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useLocation, useNavigate} from "react-router";
 import {useFormik} from "formik";
 import s from './lostFoundForm.module.css'
@@ -6,7 +6,6 @@ import Input from "../../../Input";
 import Select from "../../../Select";
 import Textarea from "../../../Textarea";
 import DragDrop from "../../../../utils/DragDrop";
-import LostFoundFormDnD from "./LostFoundFormDnD";
 
 import LOST_FOUND from '../../../../images/lostFound.png'
 import {auth, db} from "../../../../firebaseConfig";
@@ -17,6 +16,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpFromBracket} from "@fortawesome/free-solid-svg-icons";
 import Autocomplete from "../../autocomplete/Autocomplete";
 import {useLoadScript} from "@react-google-maps/api";
+import {USER_PICTURE_PLACEHOLDER} from "../../../../utils/constants";
 
 const libraries = ['places']
 
@@ -117,7 +117,9 @@ function LostFoundForm() {
 
     return (
         <>
-            <h3> {location.state.isLost ? 'Lost your buddy?' : 'Found your buddy?'} </h3>
+            {location.state.isLost
+                ? <h3><b>Lost your buddy?</b> Keep calm and complete the form</h3>
+                : <h3><b>Found a pet?</b> Please complete the form to help</h3>}
 
             <form onSubmit={formik.handleSubmit} className={s.form}>
                 <div className={s.upperForm}>
@@ -144,15 +146,15 @@ function LostFoundForm() {
                     <div className={s.right}>
                         <img src={LOST_FOUND} alt=""/>
                         <div>
-                            {/*<DragDrop setFile={setImage}>*/}
-                            {/*    <LostFoundFormDnD/>*/}
-                            {/*</DragDrop>*/}
                             <label htmlFor="lf_image" className={s.download}>
                                 <FontAwesomeIcon icon={faArrowUpFromBracket}/>
                                 <input type="file" id={'lf_image'}
                                        style={{display: 'none'}}
                                        onChange={(e) => setImage(e.target.files[0])}/>
                             </label>
+                            <DragDrop setFile={setImage}>
+                                <span>Drag and drop photos or browse</span>
+                            </DragDrop>
                             <div className={s.files}>
                                 {image && [image].map((file, index) => (
                                     <div key={index} className={s.file}>
@@ -205,7 +207,7 @@ function LostFoundForm() {
                 </div>
                 <div className={s.footer}>
                     <div>
-                        <img src={user.photoUrl || LOST_FOUND} alt=""/>
+                        <img src={user.photoUrl || USER_PICTURE_PLACEHOLDER} alt=""/>
                         <span>{user.displayName}</span>
                     </div>
                     <button type={'submit'} className={'filledBtn'}> Publish</button>

@@ -8,6 +8,7 @@ import s from './newPost.module.css'
 import formStyle from '../LostFound/lostFoundForm/lostFoundForm.module.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpFromBracket, faPaw} from "@fortawesome/free-solid-svg-icons";
+import DragDrop from "../../../utils/DragDrop";
 
 function NewPost(props) {
     const [image, setImage] = useState(null)
@@ -67,7 +68,9 @@ function NewPost(props) {
                                style={{display: 'none'}}
                                onChange={(e) => setImage(e.target.files[0])}/>
                     </label>
-                    <p>Upload a photo</p>
+                    <DragDrop setFile={setImage}>
+                        <span>Drag and drop photos or browse</span>
+                    </DragDrop>
                     <div className={formStyle.files}>
                         {image && [image].map((file, index) => (
                             <div key={index} className={formStyle.file}>

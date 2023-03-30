@@ -70,3 +70,21 @@ textarea {
     box-shadow: 0 3px 6px #00000029;
     padding: 20px 0;
 }
+
+h3 {
+    font-weight: 550;
+    margin-bottom: 30px;
+    text-align: left;
+    color: var(--dark-green);
+}
+
+.dropZone {
+    width: 120px;
+    text-align: center;
+    padding: 5px;
+    border: 4px dashed var(--green);
+}
+
+.dropZone:hover {
+    cursor: pointer;
+}

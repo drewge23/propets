@@ -1,10 +1,9 @@
 import React from 'react';
 import Post from "./Post";
 
-function Posts({posts, title, type}) {
+function Posts({posts, type}) {
     return (
         <div>
-            <h2>{title}</h2>
             {posts && posts.docs
                 .sort((a, b) => b.data().createdAt.seconds - a.data().createdAt.seconds)
                 .map(post => (
