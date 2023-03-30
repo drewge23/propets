@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+
+.main{
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+}
+
+.container label {
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 550;
+  text-align: right;
+}
+
+.autocomplete{
+  max-width: 200px;
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid var(--light-green);
+  margin-bottom: 0;
+}
+
+.list{
+  list-style: none;
+}
+
+.line{
+  margin: 0;
+  font-size: 0.9em;
+  border: 1px solid var(--green);
+}
+
+.list .line:before {
+  display: none;
+}
+
+.line:hover{
+  cursor: pointer;
+  background-color: var(--light-green);
+}

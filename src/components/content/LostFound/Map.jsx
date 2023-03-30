@@ -23,6 +23,7 @@ function Map() {
     const {isLoaded} = useLoadScript({
         googleMapsApiKey : process.env.REACT_APP_GOOGLE_MAPS_API_KEY
     })
+
     const center = useMemo(() => ({ lat: 32.072162620371934, lng: 34.78794113915044}), [])
     const mapRef = useRef(undefined)
 

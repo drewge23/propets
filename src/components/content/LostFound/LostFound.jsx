@@ -41,8 +41,8 @@ function LostFound(props) {
                                                                     postId={post.id}
                                                                     key={post.id}/>)}
                 </div>
-                <Map/>
             </div>
+            <Map/>
         </div>
     );
 }
