@@ -7,13 +7,14 @@ function Favorites(props) {
 
     const currentUserId = auth.currentUser.uid
     const [subsPostIds] = useCollection(db.collection('subscriptions').where('userId', '==', currentUserId))
-    const [posts] = useCollection(db.collection('posts'))
+    const [posts, loading] = useCollection(db.collection('posts'))
     const [favPosts, setFavPosts] = useState(null)
     const [favPostIds, setFavPostIds] = useState(null)
 
     useEffect(()=>{
+        // console.log(subsPostIds.docs[0]?.data().favorites)
         if (subsPostIds){
-            setFavPostIds(subsPostIds.docs[0].data().favorites)
+            setFavPostIds(subsPostIds.docs[0]?.data().favorites)
         }
     }, [subsPostIds])
 
@@ -25,22 +26,21 @@ function Favorites(props) {
         }
     },[posts, favPostIds])
 
-
-    const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        if (favPosts && favPosts.docs){
-            setLoading(false)
-        }
-    },[favPosts])
+    //
+    // const [loading, setLoading] = useState(true)
+    // useEffect(() => {
+    //     if (favPosts && favPosts.docs){
+    //         setLoading(false)
+    //     }
+    // },[favPosts])
 
 
     return (
         <div>
-            {/*{favPosts && console.log(favPosts.docs)}*/}
             {
                 loading
                     ? <p>Loading...</p>
-                    : favPostIds.length !== 0
+                    : favPosts && favPostIds.length !== 0
                         ? <Posts title={''} posts={favPosts}/>
                         : <p> No favorites!</p>
             }
