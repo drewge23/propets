@@ -62,24 +62,12 @@ img {
     gap: 1rem;
 }
 
-.dnd {
-    width: 120px;
-    font-size: 12px;
-    font-weight: 400;
-    margin: 1rem auto;
-
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.dnd:hover {
-    cursor: pointer;
-}
-
-.dnd span {
-    font-size: 2rem;
-}
+/*.dnd {*/
+/*    text-align: center;*/
+/*    min-width: 100px;*/
+/*    font-size: 12px;*/
+/*    font-weight: 400;*/
+/*}*/
 
 .files {
     width: 140px;

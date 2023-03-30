@@ -77,3 +77,14 @@ h3 {
     text-align: left;
     color: var(--dark-green);
 }
+
+.dropZone {
+    width: 120px;
+    text-align: center;
+    padding: 5px;
+    border: 4px dashed var(--green);
+}
+
+.dropZone:hover {
+    cursor: pointer;
+}
