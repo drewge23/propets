@@ -1,7 +1,8 @@
 import React, {useCallback, useMemo, useRef} from 'react';
-import {GoogleMap, useLoadScript, MarkerF} from "@react-google-maps/api";
+import {GoogleMap, useLoadScript} from "@react-google-maps/api";
 import s from './lostFoundContent.module.css'
 import {defaultTheme} from "./Theme";
+import CustomMarker from "./CustomMarker";
 
 const defaultOptions = {
     panControl: true,
@@ -18,7 +19,7 @@ const defaultOptions = {
     styles: defaultTheme,
 }
 
-function Map() {
+function Map({posts}) {
 
     const {isLoaded} = useLoadScript({
         googleMapsApiKey : process.env.REACT_APP_GOOGLE_MAPS_API_KEY
@@ -35,7 +36,6 @@ function Map() {
         mapRef.current = map
     }, [])
 
-
     if (!isLoaded)
         return <div>Loading...</div>
     return (
@@ -48,7 +48,10 @@ function Map() {
                 onUnmount={onUnmount}
                 options={defaultOptions}
             >
-                <MarkerF position={center}/>
+                {posts && posts?.docs
+                    .map (post => {
+                        return post?.data()?.coords?.lat ? <CustomMarker position={post.data().coords}/> : null
+                    })}
             </GoogleMap>
         </div>
     );

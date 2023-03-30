@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useCollection} from "react-firebase-hooks/firestore";
 import {db} from "../../../firebaseConfig";
 import LostFoundPost from "./LostFoundPost";
@@ -16,6 +16,14 @@ function LostFound(props) {
     const [posts] = useCollection(
         db.collection('lost_and_found').where('status', '==', lastParam)
     )
+
+    // const [locations, setLocations] = useState([])
+    // useEffect(()=>{
+    //     if (posts){
+    //         setLocations(posts.docs.filter(post => post.data()?.coords?.lat != null))
+    //     }
+    //     console.log(locations)
+    // },[posts])
 
     return (
         <div>
@@ -38,11 +46,11 @@ function LostFound(props) {
                     {posts && posts.docs
                     	.sort((a, b) => b.data().createdAt?.seconds - a.data().createdAt?.seconds)
                     	.map(post => <LostFoundPost post={post.data()}
-                                                                    postId={post.id}
-                                                                    key={post.id}/>)}
+                                                    postId={post.id}
+                                                    key={post.id}/>)}
                 </div>
             </div>
-            <Map/>
+            {posts && <Map posts={posts}/>}
         </div>
     );
 }

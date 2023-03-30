@@ -4,10 +4,11 @@ import puppy from '../images/puppy.png'
 import allPets from '../images/allPets2.png'
 import lensPawBig from '../images/lensPaw2.png'
 import profilePhoto from '../images/profile1.jpg'
+import markerPaw from '../images/marker-paw.png'
 
 export {default as USER_PICTURE_PLACEHOLDER} from '../images/profile1.jpg';
 
-export {logo, logoBig, puppy, allPets, lensPawBig, profilePhoto}
+export {logo, logoBig, puppy, allPets, lensPawBig, profilePhoto, markerPaw}
 
 export function getPostTime(createdAt) {
     const currentTime = Date.now()         //в миллисекундах сейчас со временем для сравнений
