@@ -27,12 +27,10 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
     const [userInfo] = useDocumentData(db.collection('users').doc(userId))
 
     const updateFavorites = () => {
-        console.log(postId)
         const favPostId = postId
         const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
         const subsRef = collection(db, 'subscriptions')
 
-        console.log(currentUsersSubs)
         if (currentUsersSubs.exists()) {
             if (fav) {
                 updateDoc(usersSubsRef, {
@@ -44,15 +42,63 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                 })
             }
         } else {
-            console.log({
-                'favorites': [favPostId],
-                'userId': currentUserId,
-            })
             setDoc(doc(subsRef, currentUserId), {
                 'favorites': [favPostId],
                 'userId': currentUserId,
             }, {merge: true})
                 .then(() => alert('Post added'))
+        }
+    }
+
+    const hide = currentUsersSubs && currentUsersSubs.data()?.hides.includes(postId)
+
+    const updateHides = () =>{
+        const hidePostId = postId
+        const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
+        const subsRef = collection(db, 'subscriptions')
+
+        if (currentUsersSubs.exists()) {
+            if (hide) {
+                updateDoc(usersSubsRef, {
+                    'hides': arrayRemove(hidePostId)
+                })
+            } else {
+                updateDoc(usersSubsRef, {
+                    'hides': arrayUnion(hidePostId)
+                })
+            }
+        } else {
+            setDoc(doc(subsRef, currentUserId), {
+                'hides': [hidePostId],
+                'userId': currentUserId,
+            }, {merge: true})
+                .then(() => alert('Subscriptions update!'))
+        }
+    }
+
+    const followings = currentUsersSubs && currentUsersSubs.data()?.followings.includes(userId)
+
+    const updateFollowing = () =>{
+        const followUserId = userId
+        const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
+        const subsRef = collection(db, 'subscriptions')
+
+        if (currentUsersSubs.exists()) {
+            if (followings) {
+                updateDoc(usersSubsRef, {
+                    'followings': arrayRemove(followUserId)
+                })
+            } else {
+                updateDoc(usersSubsRef, {
+                    'followings': arrayUnion(followUserId)
+                })
+            }
+        } else {
+            setDoc(doc(subsRef, currentUserId), {
+                'followings': [followUserId],
+                'userId': currentUserId,
+            }, {merge: true})
+                .then(() => alert('Subscriptions update!'))
         }
     }
 
@@ -97,13 +143,12 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                     {showFullText && <span className={s.more}>...more</span>}
                 </div>
                 <span className={s.menu} onClick={() => {
-                    setOpenMenu(!openMenu)
-                }}>•••</span>
+                    setOpenMenu(!openMenu)}}>•••</span>
                 {openMenu && <div className={s.settings}>
-                    <button>
+                    <button onClick={updateHides}>
                         <FontAwesomeIcon icon={faEyeSlash}/> Hide from feed
                     </button>
-                    <button>
+                    <button onClick={updateFollowing}>
                         <FontAwesomeIcon icon={faUserXmark}/> Unfollow
                     </button>
                 </div>}
