@@ -51,7 +51,7 @@ function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
             {imageUrl && <img src={imageUrl} alt=""/>}
             <div className={s.right}>
                 <div className={s.header}>
-                    <h3>{post.type + ', ' + post.breed}</h3>
+                    <h3>{post.type + (post.breed ? ', ' + post.breed : '')}</h3>
                     {editable && <div>
                         <Link to={'/content/lost&foundform'}
                               state={{
