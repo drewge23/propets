@@ -11,14 +11,14 @@ import {
     faPaw,
     faPersonWalking,
     faSearch,
-    faStar, faStethoscope
+    faStar,
+    faStethoscope
 } from '@fortawesome/free-solid-svg-icons'
 import SideNavLink from "./SideNavLink";
 import {Link} from "react-router-dom";
-
-import PLACEHOLDER from '../../../images/allPets.png'
 import {auth} from "../../../firebaseConfig";
 import {useSelector} from "react-redux";
+import {USER_PICTURE_PLACEHOLDER} from "../../../utils/constants";
 
 function SideNav(props) {
     const [active, setActive] = useState(0)
@@ -29,13 +29,13 @@ function SideNav(props) {
             icon: <FontAwesomeIcon icon={faHotel}/>,
             text: 'Hotels',
         }, {
-            to: 'fostering',
-            icon: <FontAwesomeIcon icon={faPersonWalking}/>,
-            text: 'Fostering',
-        }, {
             to: 'walking',
             icon: <FontAwesomeIcon icon={faDog}/>,
             text: 'Walking',
+        }, {
+            to: 'fostering',
+            icon: <FontAwesomeIcon icon={faPersonWalking}/>,
+            text: 'Fostering',
         }, {
             to: 'vethelp',
             icon: <FontAwesomeIcon icon={faStethoscope}/>,
@@ -87,7 +87,7 @@ function SideNav(props) {
                 <div className={s.profile}>
                     {user.photoUrl
                         ? <img src={user.photoUrl} alt=""/>
-                        : <img src={PLACEHOLDER}/>}
+                        : <img src={USER_PICTURE_PLACEHOLDER} alt=""/>}
                     <SideNavLink to={'profile'} isActive={active === -1} setActive={setActive} index={-1}
                                  text={user.displayName}/>
                 </div>

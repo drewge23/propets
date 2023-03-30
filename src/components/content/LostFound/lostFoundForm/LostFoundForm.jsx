@@ -117,7 +117,9 @@ function LostFoundForm() {
 
     return (
         <>
-            <h3> {location.state.isLost ? 'Lost your buddy?' : 'Found your buddy?'} </h3>
+            {location.state.isLost
+                ? <h3><b>Lost your buddy?</b> Keep calm and complete the form</h3>
+                : <h3><b>Found a pet?</b> Please complete the form to help</h3>}
 
             <form onSubmit={formik.handleSubmit} className={s.form}>
                 <div className={s.upperForm}>

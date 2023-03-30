@@ -1,19 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import s from '../profile/profile.module.css'
-import {profilePhoto} from "../../../utils/constants";
+import {USER_PICTURE_PLACEHOLDER} from "../../../utils/constants";
 import {useFormik} from "formik";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCamera, faPencil, faFloppyDisk as save} from '@fortawesome/free-solid-svg-icons'
-import {useAuthState} from "react-firebase-hooks/auth";
-import {auth, db} from "../../../firebaseConfig";
-import {setUser, updateEmail, updateFacebook, updateName, updatePhone, updatePhoto} from "../../../BLL/userSlice";
+import {faCamera, faFloppyDisk as save, faPencil} from '@fortawesome/free-solid-svg-icons'
+import {db} from "../../../firebaseConfig";
+import {updateEmail, updateFacebook, updateName, updatePhone, updatePhoto} from "../../../BLL/userSlice";
 import {useDispatch, useSelector} from "react-redux";
-import {EmailAuthProvider} from "@firebase/auth";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import {nanoid} from "@reduxjs/toolkit";
 import Activities from "./Activities";
 import {useLocation} from "react-router";
-import {useDocument} from "react-firebase-hooks/firestore";
 
 const EMAIL_REGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 const PHONE_REGEXP = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/
@@ -123,7 +120,7 @@ function Profile(props) {
 
     return (
         <>
-            <h3>Your profile. Change, edit and manage your data.</h3>
+            <h3><b>Your profile.</b> Change, edit and manage your data.</h3>
             <form onSubmit={formik.handleSubmit} name={'profile'} id={'profile'}>
                 <div className={s.window}>
                     <div className={s.header}>
@@ -137,7 +134,7 @@ function Profile(props) {
                     {profile && <div className={s.main}>
                         <div className={s.mainInfo}>
                             <div className={s.avatar}>
-                                <img src={user?.photoUrl || profilePhoto} alt={'profile photo'}/>
+                                <img src={user?.photoUrl || USER_PICTURE_PLACEHOLDER} alt={'profile photo'}/>
                                 <label htmlFor="photo" className={s.camera}>
                                     <FontAwesomeIcon icon={faCamera}/>
                                     <input

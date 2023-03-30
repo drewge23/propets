@@ -8,7 +8,10 @@ function Hotels(props) {
     const [posts] = useCollection(db.collection('posts').where('type', '==', 'hotels'))
 
     return (
-        <Posts title={'Hotels'} posts={posts}/>
+        <>
+            <h3><b>Hotels.</b> Go to vacations — we’ll take care of your pet!</h3>
+            <Posts posts={posts}/>
+        </>
     )
 }
 
