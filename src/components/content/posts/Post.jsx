@@ -21,11 +21,9 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
 
     const currentUserId = auth.currentUser.uid
     const [currentUsersSubs] = useDocument(db.collection('subscriptions').doc(currentUserId))
-
-    const fav = currentUsersSubs && currentUsersSubs.data()?.favorites.includes(postId)
-
     const [userInfo] = useDocumentData(db.collection('users').doc(userId))
 
+    const fav = currentUsersSubs && currentUsersSubs.data()?.favorites?.includes(postId)
     const updateFavorites = () => {
         const favPostId = postId
         const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
@@ -50,9 +48,8 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
         }
     }
 
-    const hide = currentUsersSubs && currentUsersSubs.data()?.hides.includes(postId)
-
-    const updateHides = () =>{
+    const hide = currentUsersSubs && currentUsersSubs.data()?.hidden?.includes(postId)
+    const updateHidden = () =>{
         const hidePostId = postId
         const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
         const subsRef = collection(db, 'subscriptions')
@@ -60,45 +57,44 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
         if (currentUsersSubs.exists()) {
             if (hide) {
                 updateDoc(usersSubsRef, {
-                    'hides': arrayRemove(hidePostId)
+                    'hidden': arrayRemove(hidePostId)
                 })
             } else {
                 updateDoc(usersSubsRef, {
-                    'hides': arrayUnion(hidePostId)
+                    'hidden': arrayUnion(hidePostId)
                 })
             }
         } else {
             setDoc(doc(subsRef, currentUserId), {
-                'hides': [hidePostId],
+                'hidden': [hidePostId],
                 'userId': currentUserId,
             }, {merge: true})
-                .then(() => alert('Subscriptions update!'))
+                .then(() => alert('Subscriptions updated!'))
         }
     }
 
-    const followings = currentUsersSubs && currentUsersSubs.data()?.followings.includes(userId)
-
-    const updateFollowing = () =>{
-        const followUserId = userId
+    const unfollowed = currentUsersSubs && currentUsersSubs.data()?.unfollowed?.includes(userId)
+    const updateUnfollowed = () =>{
+        const unfollowUserId = userId
         const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
         const subsRef = collection(db, 'subscriptions')
 
         if (currentUsersSubs.exists()) {
-            if (followings) {
+            if (unfollowed) {
                 updateDoc(usersSubsRef, {
-                    'followings': arrayRemove(followUserId)
+                    'unfollowed': arrayRemove(unfollowUserId)
                 })
             } else {
                 updateDoc(usersSubsRef, {
-                    'followings': arrayUnion(followUserId)
+                    'unfollowed': arrayUnion(unfollowUserId)
                 })
             }
         } else {
             setDoc(doc(subsRef, currentUserId), {
-                'followings': [followUserId],
+                'unfollowed': [unfollowUserId],
                 'userId': currentUserId,
             }, {merge: true})
-                .then(() => alert('Subscriptions update!'))
+                .then(() => alert('Subscriptions updated!'))
         }
     }
 
@@ -145,10 +141,10 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                 <span className={s.menu} onClick={() => {
                     setOpenMenu(!openMenu)}}>•••</span>
                 {openMenu && <div className={s.settings}>
-                    <button onClick={updateHides}>
+                    <button onClick={updateHidden}>
                         <FontAwesomeIcon icon={faEyeSlash}/> Hide from feed
                     </button>
-                    <button onClick={updateFollowing}>
+                    <button onClick={updateUnfollowed}>
                         <FontAwesomeIcon icon={faUserXmark}/> Unfollow
                     </button>
                 </div>}
