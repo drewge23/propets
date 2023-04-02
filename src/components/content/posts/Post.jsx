@@ -176,7 +176,7 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                 <span className={s.menu} ref={closeMenu} onClick={() => {
                     setOpenMenu(!openMenu)
                 }}>•••</span>
-                {openMenu && <div className={s.settings}>
+                {openMenu && <div className={`ignore-onclickoutside ${s.settings}`}>
                     <button onClick={updateHidden}>
                         <FontAwesomeIcon icon={faEyeSlash}/> Hide from feed
                     </button>
