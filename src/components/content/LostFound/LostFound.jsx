@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
+import {useLocation} from "react-router";
 import {useCollection} from "react-firebase-hooks/firestore";
 import {db} from "../../../firebaseConfig";
 import LostFoundPost from "./LostFoundPost";
-import {useLocation} from "react-router";
 import Map from "./Map";
-import s from './lostFoundContent.module.css'
 import Loading from "../../Loading";
+import s from './lostFoundContent.module.css'
 
 function LostFound(props) {
     const location = useLocation()
@@ -17,14 +17,6 @@ function LostFound(props) {
     const [posts, loading] = useCollection(
         db.collection('lost_and_found').where('status', '==', lastParam)
     )
-
-    // const [locations, setLocations] = useState([])
-    // useEffect(()=>{
-    //     if (posts){
-    //         setLocations(posts.docs.filter(post => post.data()?.coords?.lat != null))
-    //     }
-    //     console.log(locations)
-    // },[posts])
 
     const [type, setType] = useState('')
     const [breed, setBreed] = useState('')
@@ -44,7 +36,7 @@ function LostFound(props) {
         : undefined
 
     return (
-        <div>
+        <>
             <div className={s.filters}>
                 <select name={'Type'} value={type}
                         onChange={(e) => setType(e.target.value)}>
@@ -63,19 +55,21 @@ function LostFound(props) {
                 <input placeholder={'Location'}
                        value={place} onChange={(e) => setPlace(e.target.value)}/>
             </div>
-            <div className={s.main}>
-                <div>
-                    {loading
-                        ? <Loading/>
-                        : posts && filteredPosts && filteredPosts
+            <div className={s.container}>
+                <div className={s.main}>
+                    <div>
+                        {loading
+                            ? <Loading/>
+                            : posts && filteredPosts && filteredPosts
                             .sort((a, b) => b.data().createdAt?.seconds - a.data().createdAt?.seconds)
                             .map(post => <LostFoundPost post={post.data()}
                                                         postId={post.id}
                                                         key={post.id}/>)}
+                    </div>
                 </div>
+                {posts && <Map posts={posts}/>}
             </div>
-            {posts && <Map posts={posts}/>}
-        </div>
+        </>
     );
 }
 
