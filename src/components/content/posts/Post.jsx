@@ -134,7 +134,7 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                     </>
                 }
                 <div className={s.main}>
-                    {imageUrl && <img src={imageUrl} alt={'pic'} className={s.imageInPost}/>}
+                    {imageUrl && <img src={imageUrl} alt={''} className={s.imageInPost}/>}
                     <p className={s.text}>{text}</p>
                     {showFullText && <span className={s.more}>...more</span>}
                 </div>
