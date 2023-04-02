@@ -16,12 +16,31 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
     if (!userPicUrl) userPicUrl = profilePhoto
 
     const [openMenu, setOpenMenu] = useState(false)
+    const [fullText, setFullText] = useState('')
     const [showFullText, setShowFullText] = useState(false)
     const [imageUrl, setImageUrl] = useState(null)
 
     const currentUserId = auth.currentUser.uid
     const [currentUsersSubs] = useDocument(db.collection('subscriptions').doc(currentUserId))
     const [userInfo] = useDocumentData(db.collection('users').doc(userId))
+
+    useEffect(() => {
+        if (!text) return
+
+        const sliced = text?.slice(0,50)
+
+        if (sliced.length < text.length) {
+            setFullText(sliced)
+        }
+        else {
+            setFullText(text)
+        }
+
+    }, [text])
+
+    const showMore = () => {
+        setShowFullText(!showFullText)
+    }
 
     const fav = currentUsersSubs && currentUsersSubs.data()?.favorites?.includes(postId)
     const updateFavorites = () => {
@@ -137,8 +156,12 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                 }
                 <div className={s.main}>
                     {imageUrl && <img src={imageUrl} alt={''} className={s.imageInPost}/>}
-                    <p className={s.text}>{text}</p>
-                    {showFullText && <span className={s.more}>...more</span>}
+                    <p className={s.text}>{fullText}</p>
+                    {
+                        fullText.length < text.length
+                            ? <span className={s.more} onClick={showMore}>...more</span>
+                            : <span style={{display: 'none'}}>...more</span>
+                    }
                 </div>
                 <span className={s.menu} onClick={() => {
                     setOpenMenu(!openMenu)
