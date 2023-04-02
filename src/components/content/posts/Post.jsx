@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import {auth, db} from "../../../firebaseConfig";
 import {getStorage, ref, getDownloadURL} from "firebase/storage";
-import s from "./post.module.css";
+import {useDocument, useDocumentData} from "react-firebase-hooks/firestore";
+import {collection, doc, setDoc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar, faEyeSlash} from "@fortawesome/free-regular-svg-icons";
 import {faUserXmark, faStar as fullStar} from "@fortawesome/free-solid-svg-icons";
+import s from "./post.module.css";
 import {getPostTime, profilePhoto} from "../../../utils/constants";
-import {auth, db} from "../../../firebaseConfig";
-import {collection, doc, setDoc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
-import {useDocument, useDocumentData} from "react-firebase-hooks/firestore";
 
 function Post({createdAt, image, text, type, userId, userName, userPicUrl, postId}) {
     const storage = getStorage();
@@ -16,12 +16,33 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
     if (!userPicUrl) userPicUrl = profilePhoto
 
     const [openMenu, setOpenMenu] = useState(false)
+    const [displayedText, setDisplayedText] = useState('')
     const [showFullText, setShowFullText] = useState(false)
     const [imageUrl, setImageUrl] = useState(null)
 
     const currentUserId = auth.currentUser.uid
     const [currentUsersSubs] = useDocument(db.collection('subscriptions').doc(currentUserId))
     const [userInfo] = useDocumentData(db.collection('users').doc(userId))
+
+    const smallText = text?.slice(0,200)
+    useEffect(()=>{
+        if (text && text.length > smallText.length){
+            setDisplayedText(smallText)
+        }
+        else {
+            setDisplayedText(text)
+        }
+    }, [text])
+
+    const showMore = () => {
+        if(!showFullText){
+            setDisplayedText(text)
+        }
+        else{
+            setDisplayedText(smallText)
+        }
+        setShowFullText(!showFullText)
+    }
 
     const fav = currentUsersSubs && currentUsersSubs.data()?.favorites?.includes(postId)
     const updateFavorites = () => {
@@ -137,8 +158,15 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                 }
                 <div className={s.main}>
                     {imageUrl && <img src={imageUrl} alt={''} className={s.imageInPost}/>}
-                    <p className={s.text}>{text}</p>
-                    {showFullText && <span className={s.more}>...more</span>}
+                    <p className={s.text}>{displayedText}
+                    {
+                        text.length <= smallText.length
+                            ? <span style={{display: 'none'}}>...more</span>
+                            : text.length > displayedText.length
+                                ? <span className={s.more} onClick={showMore}> ...more</span>
+                                : <span className={s.more} onClick={showMore}> ...hide</span>
+                    }
+                    </p>
                 </div>
                 <span className={s.menu} onClick={() => {
                     setOpenMenu(!openMenu)
