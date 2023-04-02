@@ -21,18 +21,14 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
 
     const currentUserId = auth.currentUser.uid
     const [currentUsersSubs] = useDocument(db.collection('subscriptions').doc(currentUserId))
-
-    const fav = currentUsersSubs && currentUsersSubs.data()?.favorites.includes(postId)
-
     const [userInfo] = useDocumentData(db.collection('users').doc(userId))
 
+    const fav = currentUsersSubs && currentUsersSubs.data()?.favorites?.includes(postId)
     const updateFavorites = () => {
-        console.log(postId)
         const favPostId = postId
         const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
         const subsRef = collection(db, 'subscriptions')
 
-        console.log(currentUsersSubs)
         if (currentUsersSubs.exists()) {
             if (fav) {
                 updateDoc(usersSubsRef, {
@@ -44,15 +40,61 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                 })
             }
         } else {
-            console.log({
-                'favorites': [favPostId],
-                'userId': currentUserId,
-            })
             setDoc(doc(subsRef, currentUserId), {
                 'favorites': [favPostId],
                 'userId': currentUserId,
             }, {merge: true})
                 .then(() => alert('Post added'))
+        }
+    }
+
+    const hide = currentUsersSubs && currentUsersSubs.data()?.hidden?.includes(postId)
+    const updateHidden = () =>{
+        const hidePostId = postId
+        const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
+        const subsRef = collection(db, 'subscriptions')
+
+        if (currentUsersSubs.exists()) {
+            if (hide) {
+                updateDoc(usersSubsRef, {
+                    'hidden': arrayRemove(hidePostId)
+                })
+            } else {
+                updateDoc(usersSubsRef, {
+                    'hidden': arrayUnion(hidePostId)
+                })
+            }
+        } else {
+            setDoc(doc(subsRef, currentUserId), {
+                'hidden': [hidePostId],
+                'userId': currentUserId,
+            }, {merge: true})
+                .then(() => alert('Subscriptions updated!'))
+        }
+    }
+
+    const unfollowed = currentUsersSubs && currentUsersSubs.data()?.unfollowed?.includes(userId)
+    const updateUnfollowed = () =>{
+        const unfollowUserId = userId
+        const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
+        const subsRef = collection(db, 'subscriptions')
+
+        if (currentUsersSubs.exists()) {
+            if (unfollowed) {
+                updateDoc(usersSubsRef, {
+                    'unfollowed': arrayRemove(unfollowUserId)
+                })
+            } else {
+                updateDoc(usersSubsRef, {
+                    'unfollowed': arrayUnion(unfollowUserId)
+                })
+            }
+        } else {
+            setDoc(doc(subsRef, currentUserId), {
+                'unfollowed': [unfollowUserId],
+                'userId': currentUserId,
+            }, {merge: true})
+                .then(() => alert('Subscriptions updated!'))
         }
     }
 
@@ -97,13 +139,12 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                     {showFullText && <span className={s.more}>...more</span>}
                 </div>
                 <span className={s.menu} onClick={() => {
-                    setOpenMenu(!openMenu)
-                }}>•••</span>
+                    setOpenMenu(!openMenu)}}>•••</span>
                 {openMenu && <div className={s.settings}>
-                    <button>
+                    <button onClick={updateHidden}>
                         <FontAwesomeIcon icon={faEyeSlash}/> Hide from feed
                     </button>
-                    <button>
+                    <button onClick={updateUnfollowed}>
                         <FontAwesomeIcon icon={faUserXmark}/> Unfollow
                     </button>
                 </div>}

@@ -50,7 +50,7 @@ function Map({posts}) {
             >
                 {posts && posts?.docs
                     .map (post => {
-                        return post?.data()?.coords?.lat ? <CustomMarker position={post.data().coords}/> : null
+                        return post?.data()?.coords?.lat ? <CustomMarker key={post.id} position={post.data().coords}/> : null
                     })}
             </GoogleMap>
         </div>
