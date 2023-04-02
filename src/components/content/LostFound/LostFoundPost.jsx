@@ -14,7 +14,7 @@ function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
 
     const [imageUrl, setImageUrl] = useState(null)
     useEffect(() => {
-        if (!storage || !imageRef) return
+        if (!post.image || !storage || !imageRef) return
         getDownloadURL(imageRef)
             .then((url) => {
                 setImageUrl(url)
@@ -71,26 +71,26 @@ function LostFoundPost({post, postId, editable, deleteActivity, deactivated}) {
                 </div>
                 <div className={s.features}>
                     <div className={s.colorSexHeight}>
-                        <p><span className={s.label}>Color: </span><span className={s.text}>{post.color}</span></p>
+                        <p><span className={s.label}>Color: </span><span className={s.text}>{post.color || '—'}</span></p>
                         <p><span className={s.label}>Sex: </span><span className={s.text}>{post.sex}</span></p>
                         <p><span className={s.label}>Height: </span><span className={s.text}>{post.height}</span></p>
                     </div>
                     <div>
                         <p>
                             <span className={s.label}>Distinctive features: </span>
-                            <span className={s.text}>{post.distinctive_features}</span>
+                            <span className={s.text}>{post.distinctive_features || '—'}</span>
                         </p>
                     </div>
                 </div>
                 <div>
-                    <p><span className={s.label}>Description: </span><span className={s.text}>{post.description}</span>
+                    <p><span className={s.label}>Description: </span><span className={s.text}>{post.description || '—'}</span>
                     </p>
                 </div>
                 <div>
                     <hr/>
                     <p>
                         <span className={s.label}><FontAwesomeIcon icon={faMapMarker}/></span>
-                        <span className={s.text}>{post.location}</span>
+                        <span className={s.text}>{post.location || 'Unknown'}</span>
                     </p>
                 </div>
                 <div className={s.userInfo}>

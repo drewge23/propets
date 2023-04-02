@@ -88,7 +88,7 @@ function LostFoundForm() {
                         db.collection('lost_and_found').add({
                             ...values,
                             status: location.state.isLost ? 'lost' : 'found',
-                            image: snapshot.metadata.fullPath,
+                            image: image ? snapshot.metadata.fullPath : null,
                             coords: {lat: coords.lat, lng: coords.lng},
                             location: place,
                             createdAt: new Date(),

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Post from "./Post";
 import {auth, db} from "../../../firebaseConfig";
 import {useDocument} from "react-firebase-hooks/firestore";
+import Loading from "../../Loading";
 
 function Posts({posts, type}) {
 
@@ -42,7 +43,7 @@ function Posts({posts, type}) {
     return (
         <div>
             {loadingSubs
-                ? <p>Paw...Paw...Paw...Paw...</p>
+                ? <Loading />
                 : displayedPosts.docs.length
                     ? displayedPosts.docs
                         .sort((a, b) => b.data().createdAt.seconds - a.data().createdAt.seconds)

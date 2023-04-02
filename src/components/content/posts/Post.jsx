@@ -49,7 +49,7 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
     }
 
     const hide = currentUsersSubs && currentUsersSubs.data()?.hidden?.includes(postId)
-    const updateHidden = () =>{
+    const updateHidden = () => {
         const hidePostId = postId
         const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
         const subsRef = collection(db, 'subscriptions')
@@ -74,7 +74,7 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
     }
 
     const unfollowed = currentUsersSubs && currentUsersSubs.data()?.unfollowed?.includes(userId)
-    const updateUnfollowed = () =>{
+    const updateUnfollowed = () => {
         const unfollowUserId = userId
         const usersSubsRef = db.collection('subscriptions').doc(currentUserId)
         const subsRef = collection(db, 'subscriptions')
@@ -98,28 +98,30 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
         }
     }
 
-    getDownloadURL(imageRef)
-        .then((url) => {
-            setImageUrl(url)
-        })
-        .catch((error) => {
-            switch (error.code) {
-                case 'storage/object-not-found':
-                    // File doesn't exist
-                    break;
-                case 'storage/unauthorized':
-                    // User doesn't have permission to access the object
-                    break;
-                case 'storage/canceled':
-                    // User canceled the upload
-                    break;
-                case 'storage/unknown':
-                    // Unknown error occurred, inspect the server response
-                    break;
-                default:
-                    alert('Something went wrong')
-            }
-        });
+    if (image) {
+        getDownloadURL(imageRef)
+            .then((url) => {
+                setImageUrl(url)
+            })
+            .catch((error) => {
+                switch (error.code) {
+                    case 'storage/object-not-found':
+                        // File doesn't exist
+                        break;
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        break;
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        break;
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect the server response
+                        break;
+                    default:
+                        alert('Something went wrong')
+                }
+            });
+    }
 
     return (
         <>
@@ -139,7 +141,8 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                     {showFullText && <span className={s.more}>...more</span>}
                 </div>
                 <span className={s.menu} onClick={() => {
-                    setOpenMenu(!openMenu)}}>•••</span>
+                    setOpenMenu(!openMenu)
+                }}>•••</span>
                 {openMenu && <div className={s.settings}>
                     <button onClick={updateHidden}>
                         <FontAwesomeIcon icon={faEyeSlash}/> Hide from feed
