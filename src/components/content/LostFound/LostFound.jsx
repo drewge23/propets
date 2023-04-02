@@ -5,6 +5,7 @@ import LostFoundPost from "./LostFoundPost";
 import {useLocation} from "react-router";
 import Map from "./Map";
 import s from './lostFoundContent.module.css'
+import Loading from "../../Loading";
 
 function LostFound(props) {
     const location = useLocation()
@@ -13,7 +14,7 @@ function LostFound(props) {
         return tempArr[tempArr.length - 1]
     }()
 
-    const [posts] = useCollection(
+    const [posts, loading] = useCollection(
         db.collection('lost_and_found').where('status', '==', lastParam)
     )
 
@@ -64,11 +65,13 @@ function LostFound(props) {
             </div>
             <div className={s.main}>
                 <div>
-                    {posts && filteredPosts && filteredPosts
-                        .sort((a, b) => b.data().createdAt?.seconds - a.data().createdAt?.seconds)
-                        .map(post => <LostFoundPost post={post.data()}
-                                                    postId={post.id}
-                                                    key={post.id}/>)}
+                    {loading
+                        ? <Loading/>
+                        : posts && filteredPosts && filteredPosts
+                            .sort((a, b) => b.data().createdAt?.seconds - a.data().createdAt?.seconds)
+                            .map(post => <LostFoundPost post={post.data()}
+                                                        postId={post.id}
+                                                        key={post.id}/>)}
                 </div>
             </div>
             {posts && <Map posts={posts}/>}

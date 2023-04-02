@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Posts from "./Posts";
-import {useCollection, useDocument} from "react-firebase-hooks/firestore";
-import {auth, db} from "../../../firebaseConfig";
+import {useCollection} from "react-firebase-hooks/firestore";
+import {db} from "../../../firebaseConfig";
+import Loading from "../../Loading";
 
 function Home() {
     const [posts, loading] = useCollection(db.collection('posts').where('type', '==', 'home'))
@@ -10,7 +11,7 @@ function Home() {
         <>
             {
                 loading
-                    ? <p>Paw...Paw...</p>
+                    ? <Loading />
                     : posts.docs.length
                         ? <Posts title={''} posts={posts}/>
                         : <p>No posts</p>

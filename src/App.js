@@ -18,6 +18,7 @@ import {auth, db} from "./firebaseConfig";
 import {useDispatch} from "react-redux";
 import {getUserThunk, setUser} from "./BLL/userSlice";
 import LostFound from "./components/content/LostFound/LostFound";
+import Loading from "./components/Loading";
 
 function App() {
     const [user] = useAuthState(auth)

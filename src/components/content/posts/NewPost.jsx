@@ -29,7 +29,7 @@ function NewPost(props) {
             .then((snapshot) => {
                 db.collection('posts').add({
                     createdAt: new Date(),
-                    image: snapshot.metadata.fullPath,
+                    image: image ? snapshot.metadata.fullPath : null,
                     text,
                     type: 'home',
                     userId: user.userId,
