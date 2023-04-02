@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import Posts from "./Posts";
 import {useCollection} from "react-firebase-hooks/firestore";
 import {auth, db} from "../../../firebaseConfig";
+import Posts from "./Posts";
+import Loading from "../../Loading";
 
 function Favorites() {
 
@@ -29,7 +30,7 @@ function Favorites() {
         <div>
             {
                 loading
-                    ? <p>Loading...</p>
+                    ? <Loading />
                     : favPosts && favPostIds.length !== 0
                         ? <Posts title={''} posts={favPosts}/>
                         : <p> No favorites!</p>
