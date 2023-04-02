@@ -8,6 +8,7 @@ import {faStar, faEyeSlash} from "@fortawesome/free-regular-svg-icons";
 import {faUserXmark, faStar as fullStar} from "@fortawesome/free-solid-svg-icons";
 import s from "./post.module.css";
 import {getPostTime, profilePhoto} from "../../../utils/constants";
+import useOnclickOutside from "react-cool-onclickoutside";
 
 function Post({createdAt, image, text, type, userId, userName, userPicUrl, postId}) {
     const storage = getStorage();
@@ -144,6 +145,10 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
             });
     }
 
+    const closeMenu = useOnclickOutside(() => {
+        setOpenMenu(false)
+    })
+
     return (
         <>
             <div className={s.post} key={postId}>
@@ -168,10 +173,10 @@ function Post({createdAt, image, text, type, userId, userName, userPicUrl, postI
                     }
                     </p>
                 </div>
-                <span className={s.menu} onClick={() => {
+                <span className={s.menu} ref={closeMenu} onClick={() => {
                     setOpenMenu(!openMenu)
                 }}>•••</span>
-                {openMenu && <div className={s.settings}>
+                {openMenu && <div className={`ignore-onclickoutside ${s.settings}`}>
                     <button onClick={updateHidden}>
                         <FontAwesomeIcon icon={faEyeSlash}/> Hide from feed
                     </button>
